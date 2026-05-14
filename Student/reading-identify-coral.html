@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coral Keepers - How to Identify Coral</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #faf9f8;
+      --text-dark: #2f3333;
+      --text-muted: #5b605f;
+      --blue: #0075de;
+      --card-border: rgba(0, 0, 0, 0.1);
+      --divider: rgba(0, 0, 0, 0.11);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --radius-card: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text-dark);
+      font-family: "Inter", sans-serif;
+    }
+
+    .top-nav {
+      position: fixed;
+      z-index: 30;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 64px;
+      backdrop-filter: blur(6px);
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: center;
+    }
+
+    .top-nav-inner {
+      width: min(1328px, calc(100% - 48px));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .brand {
+      width: 239px;
+      height: 36.716px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      align-items: stretch;
+      height: 48px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+      line-height: 16px;
+      border-bottom: 2px solid transparent;
+      text-decoration: none;
+    }
+
+    .nav-link.active {
+      color: var(--blue);
+      font-weight: 700;
+      border-bottom-color: var(--blue);
+      padding-bottom: 2px;
+    }
+
+    .nav-link.messages-tab {
+      width: 98px;
+      min-width: 98px;
+      max-width: 98px;
+      flex: 0 0 98px;
+      justify-content: center;
+    }
+
+    .nav-link.profile-tab {
+      width: 78px;
+      min-width: 78px;
+      max-width: 78px;
+      flex: 0 0 78px;
+      justify-content: center;
+    }
+
+    .reading-page {
+      padding-top: 88px;
+      padding-bottom: 48px;
+      position: relative;
+    }
+
+    .hero {
+      height: 200px;
+      min-height: 200px;
+      max-height: 200px;
+      position: relative;
+      overflow: visible;
+    }
+
+    .hero .banner {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block;
+    }
+
+    .course-title {
+      text-align: center;
+      margin: 28px 24px 32px;
+      font-size: 24px;
+      line-height: 1.2;
+      font-weight: 500;
+      color: #000;
+    }
+
+    .content-wrap {
+      width: min(1140px, calc(100% - 48px));
+      margin: 0 auto;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-card);
+      background: #fff;
+      box-shadow: var(--shadow);
+      position: relative;
+      min-height: 0;
+      overflow: hidden;
+    }
+
+    .main {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 40px clamp(20px, 4vw, 48px) 56px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .main .back-link {
+      align-self: flex-start;
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      height: 32px;
+      padding: 0 14px;
+      margin: 0 0 16px;
+      border-radius: 4px;
+      background: #0075de;
+      color: #fff;
+      font-size: 12px;
+      line-height: 16px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      text-decoration: none;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+    }
+
+    .lesson-title {
+      margin: 0;
+      font-size: 24px;
+      line-height: 1.25;
+      font-weight: 500;
+      color: #000;
+      text-align: center;
+      width: 100%;
+    }
+
+    .reading-meta {
+      margin: 10px 0 0;
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--text-muted);
+      text-align: center;
+      width: 100%;
+      max-width: 42rem;
+    }
+
+    .reading-body {
+      margin-top: 28px;
+      width: 100%;
+      max-width: 42rem;
+      text-align: left;
+    }
+
+    .reading-body h3 {
+      margin: 22px 0 10px;
+      font-size: 15px;
+      font-weight: 700;
+      color: #000;
+    }
+
+    .reading-body h3:first-child {
+      margin-top: 0;
+    }
+
+    .reading-body p {
+      margin: 0 0 14px;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text-dark);
+    }
+
+    .reading-body ul {
+      margin: 0 0 14px;
+      padding-left: 1.25rem;
+      font-size: 14px;
+      line-height: 1.55;
+      color: var(--text-dark);
+    }
+
+    .reading-body li {
+      margin-bottom: 6px;
+    }
+
+    @media (max-width: 1280px) {
+      .top-nav-inner {
+        width: 100%;
+        padding: 0 12px;
+      }
+
+      .content-wrap {
+        width: calc(100% - 24px);
+      }
+
+      .main {
+        padding: 28px 16px 40px;
+      }
+    }
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 40;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text-dark);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 1000px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      .nav-links {
+        display: flex;
+        position: fixed;
+        top: 64px;
+        right: 0;
+        width: 280px;
+        height: calc(100vh - 64px);
+        background: #ffffff;
+        flex-direction: column;
+        padding: 16px 24px;
+        box-shadow: -10px 0 20px rgba(0, 0, 0, 0.05);
+        border-left: 1px solid rgba(0, 0, 0, 0.08);
+        gap: 0;
+        z-index: 100;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+      }
+
+      .nav-links.open {
+        transform: translateX(0);
+      }
+
+      .nav-link {
+        width: 100%;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--divider);
+        height: auto;
+      }
+
+      .nav-link.active {
+        border-bottom-color: var(--blue);
+      }
+
+      .menu-toggle.open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+
+      .menu-toggle.open span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-toggle.open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="top-nav">
+    <div class="top-nav-inner">
+      <a href="index.html" aria-label="Go to Home">
+        <button class="menu-toggle" aria-label="Toggle menu"
+          onclick="this.classList.toggle('open'); document.querySelector('.nav-links').classList.toggle('open')">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+        <img class="brand" src="../assets/CK word logo.svg" alt="Coral Keepers" />
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a class="nav-link" href="index.html">Home</a>
+        <a class="nav-link active" href="learn.html">Learn</a>
+        <a class="nav-link" href="announcements.html">Announcements</a>
+        <a class="nav-link" href="calendar.html">Calendar</a>
+        <a class="nav-link messages-tab" href="messages.html">Messages</a>
+        <a class="nav-link profile-tab" href="profile.html">Profile</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="reading-page">
+    <section class="hero">
+      <img class="banner" src="../assets/a058b39e-6249-44df-8dee-6af03698bf83.webp" alt="Coral reef" />
+    </section>
+
+    <h1 class="course-title">Introduction to Marine Biology</h1>
+
+    <section class="content-wrap">
+      <section class="main">
+        <a class="back-link" id="lesson-back-link" href="learn.html">Back to Learn</a>
+        <h2 class="lesson-title">How to Identify Coral</h2>
+        <p class="reading-meta">Due April 14, 2026 at 9:00 AM · Sample reading for class discussion</p>
+        <div class="reading-body">
+          <h3>Start with growth form</h3>
+          <p>Branching, massive (boulder-shaped), plating, and encrusting types respond differently to waves and light. Sketching the outline before naming a species helps you avoid mixing up look-alikes.</p>
+          <h3>Use polyp clues</h3>
+          <p>Day vs. night feeders often show different textures: some keep tentacles tucked until dark; others show fuzzy crowns in sunlight. Note mouth size, spacing, and whether polyps share walls.</p>
+          <h3>Color is a hint, not proof</h3>
+          <p>Bleaching and algae film change apparent color fast. Pair what you see with structure—ridge spacing, corallite shape, and tip taper—before relying on hue alone.</p>
+          <ul>
+            <li>Photograph with a scale object when permitted.</li>
+            <li>Record depth and light direction for context.</li>
+            <li>Cross-check with Coral Anatomy terms from the companion reading.</li>
+          </ul>
+          <p><em>This page is placeholder course content for navigation demos.</em></p>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      var el = document.getElementById('lesson-back-link');
+      if (!el) return;
+      var from = new URLSearchParams(window.location.search).get('from');
+      if (from === 'readings') {
+        el.setAttribute('href', 'readings.html');
+        el.textContent = 'Back to All Readings';
+      } else if (from === 'videos') {
+        el.setAttribute('href', 'videos.html');
+        el.textContent = 'Back to All Videos';
+      } else {
+        el.setAttribute('href', 'learn.html');
+        el.textContent = 'Back to Learn';
+      }
+    })();
+  </script>
+
+  <iframe id="cory-iframe" src="https://cory-ai-brain.vercel.app/"
+    style="position: fixed; bottom: 0px; right: 0px; width: 400px; height: 600px; border: none; z-index: 9999; background-color: transparent;"></iframe>
+</body>
+
+</html>

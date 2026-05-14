@@ -1,0 +1,3423 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Coral Keepers - Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #faf9f8;
+      --text-dark: #2f3333;
+      --text-muted: #5b605f;
+      --blue: #0075de;
+      --green: #16a34a;
+      --card-border: rgba(0, 0, 0, 0.1);
+      --divider: rgba(0, 0, 0, 0.05);
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+      --radius-card: 8px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", sans-serif;
+      background: var(--bg);
+      color: var(--text-dark);
+    }
+
+    .top-nav {
+      position: fixed;
+      z-index: 30;
+      left: 0;
+      right: 0;
+      top: 0;
+      height: 64px;
+      backdrop-filter: blur(6px);
+      background: rgba(255, 255, 255, 0.95);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: center;
+    }
+
+    .top-nav-inner {
+      width: min(1328px, calc(100% - 48px));
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 100%;
+    }
+
+    .brand {
+      width: 239px;
+      height: 36.716px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      align-items: stretch;
+      height: 48px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+      line-height: 16px;
+      border-bottom: 2px solid transparent;
+      text-decoration: none;
+    }
+
+    .nav-link.active {
+      color: var(--blue);
+      font-weight: 700;
+      border-bottom-color: var(--blue);
+      padding-bottom: 2px;
+    }
+
+    .nav-link.messages-tab {
+      width: 98px;
+      min-width: 98px;
+      max-width: 98px;
+      flex: 0 0 98px;
+      justify-content: center;
+    }
+
+    html {
+      overflow-y: scroll;
+    }
+
+    .brand {
+      width: 239px;
+      height: 36.716px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 4px;
+      align-items: stretch;
+      height: 48px;
+    }
+
+    .nav-link {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      font-size: 12px;
+      color: var(--text-muted);
+      font-weight: 500;
+      line-height: 16px;
+      border-bottom: 2px solid transparent;
+      text-decoration: none;
+    }
+
+    .nav-link.active {
+      color: var(--blue);
+      font-weight: 700;
+      border-bottom-color: var(--blue);
+      padding-bottom: 2px;
+    }
+
+    .nav-link.messages-tab {
+      width: 98px;
+      min-width: 98px;
+      max-width: 98px;
+      flex: 0 0 98px;
+      justify-content: center;
+    }
+
+    .nav-link.profile-tab {
+      width: 78px;
+      min-width: 78px;
+      max-width: 78px;
+      flex: 0 0 78px;
+      justify-content: center;
+    }
+
+    .page {
+      width: min(1328px, calc(100% - 48px));
+      margin: 0 auto;
+      padding-top: 88px;
+      padding-bottom: 24px;
+      position: relative;
+    }
+
+    .welcome {
+      font-size: 32px;
+      line-height: 32px;
+      letter-spacing: -2.125px;
+      color: #424242;
+      margin: 0;
+      font-weight: 600;
+    }
+
+    .layout {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 32px;
+      row-gap: 32px;
+      align-items: stretch;
+    }
+
+    .card {
+      background: #fff;
+      border: 1px solid var(--card-border);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow);
+    }
+
+    .tank-card {
+      min-height: 838px;
+      height: auto;
+      position: relative;
+      grid-row: 1 / span 2;
+      padding-bottom: 32px;
+    }
+
+    .demo-stress-hitbox {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: 0;
+      border: 0;
+      opacity: 0;
+      bottom: 0;
+      left: 0;
+      z-index: 1;
+      pointer-events: auto;
+      cursor: default;
+      background: transparent;
+    }
+
+    .tank-header {
+      height: 53px;
+      border-bottom: 1px solid var(--divider);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 24px 17px;
+      background: #fff;
+    }
+
+    .tank-title {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 12px;
+      line-height: 16px;
+      letter-spacing: 1.2px;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+
+    .tank-title .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 12px;
+      background: #9f403d;
+    }
+
+    .tank-actions {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      color: var(--text-muted);
+      font-size: 10px;
+      font-weight: 700;
+      line-height: 15px;
+    }
+
+    .capture {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .tank-image-wrap {
+      height: 251px;
+      position: relative;
+      background: #1c1917;
+      overflow: hidden;
+    }
+
+    .tank-enlarge {
+      position: absolute;
+      right: 16px;
+      bottom: 16px;
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      min-height: 36px;
+      background: #fff;
+      border-radius: 50%;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s;
+      z-index: 5;
+      flex: 0 0 auto;
+    }
+
+    .tank-enlarge:hover {
+      transform: scale(1.1);
+    }
+
+    .tank-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+    }
+
+    .tank-modal.active {
+      display: flex;
+    }
+
+    .tank-modal img {
+      max-width: 85%;
+      max-height: 85%;
+      object-fit: contain;
+      border-radius: 12px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      cursor: default;
+    }
+
+    .tank-modal-close {
+      position: absolute;
+      top: 32px;
+      right: 32px;
+      width: 48px;
+      height: 48px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      z-index: 1001;
+      border-radius: 50%;
+      padding: 0;
+      line-height: 1;
+      transition: background 0.2s;
+    }
+
+    .tank-modal-close svg {
+      width: 24px;
+      height: 24px;
+      display: block;
+    }
+
+    .tank-modal-close:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .sim-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+      padding: 40px 20px;
+    }
+
+    .sim-modal.active {
+      display: flex;
+    }
+
+    .sim-modal-content {
+      position: relative;
+      width: 100%;
+      max-width: 1400px;
+      height: 85vh;
+      max-height: 85vh;
+      background: #fff;
+      border-radius: 12px;
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      grid-template-rows: auto 1fr;
+      gap: 24px;
+      padding: 32px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      cursor: default;
+      overflow: hidden;
+    }
+
+    .sim-modal-header {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+    }
+
+    .sim-modal-header .sim-score-label {
+      font-size: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1.6px;
+      font-weight: 700;
+      color: #5b605f;
+    }
+
+    .sim-modal-header .sim-score {
+      color: #16a34a;
+      font-weight: 700;
+      font-size: 18px;
+    }
+
+    .sim-modal-header .sim-score-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sim-modal-image {
+      grid-column: 1;
+      grid-row: 2;
+      background: #111;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      /* Neutralize overlap */
+    }
+
+    .sim-modal-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sim-modal-metrics .metric-label {
+      font-size: 16px;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-left: 0;
+      justify-content: flex-start;
+      width: 100%;
+    }
+
+    .sim-modal-metrics .metric-label img {
+      flex-shrink: 0;
+    }
+
+    /* ── Global Row Layout (dashboard + modal) ── */
+    .metric-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 0;
+      overflow: visible;
+      /* Prevents edge clipping on small views */
+    }
+
+    /* The Base Input - Let the browser size it naturally */
+    .sim-slider {
+      -webkit-appearance: none;
+      /* Crucial Reset */
+      appearance: none;
+      flex: 1;
+      width: 100%;
+      background: transparent;
+      /* Crucial: Hides native track */
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .sim-slider:focus {
+      outline: none;
+    }
+
+    /* The Custom Track */
+    .sim-slider::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 8px;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+    }
+
+    /* The Custom Thumb */
+    .sim-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      /* Crucial Reset */
+      appearance: none;
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
+      background: #0075de;
+      cursor: pointer;
+      /* Formula: (Track Height / 2) - (Thumb Height / 2) */
+      margin-top: -8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Firefox Support */
+    .sim-slider::-moz-range-track {
+      width: 100%;
+      height: 8px;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 4px;
+    }
+
+    .sim-slider::-moz-range-thumb {
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
+      background: #0075de;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    }
+
+    .sim-modal-metrics .metric-value {
+      font-size: 18px;
+      font-weight: 700;
+      color: #0075de;
+      flex: 0 0 85px;
+      text-align: left;
+      pointer-events: none;
+      user-select: none;
+      margin-left: 16px;
+    }
+
+    .sim-modal-metrics .sim-metric {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      width: 100%;
+    }
+
+    .sim-modal-metrics .metric-row {
+      width: 100%;
+      padding-left: 0;
+      box-sizing: border-box;
+    }
+
+    .sim-modal-metrics {
+      grid-column: 2;
+      grid-row: 2;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto repeat(4, auto);
+      gap: 20px;
+      padding-right: 16px;
+      padding-left: 0;
+      align-content: start;
+      justify-items: stretch;
+    }
+
+    .sim-modal-score-big {
+      grid-column: 1 / -1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding-bottom: 40px;
+      margin-bottom: 32px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      text-align: center;
+    }
+
+
+    .sim-modal-score-big .sim-score-label {
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 700;
+      color: #5b605f;
+    }
+
+    .sim-modal-score-big .sim-score {
+      font-size: 120px;
+      font-weight: 900;
+      color: #16a34a;
+      line-height: 1;
+      letter-spacing: -4px;
+    }
+
+    .sim-modal-metrics::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .sim-modal-metrics::-webkit-scrollbar-track {
+      background: rgba(0, 0, 0, 0.05);
+      border-radius: 4px;
+    }
+
+    .sim-modal-metrics::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.2);
+      border-radius: 4px;
+    }
+
+    .sim-modal-close {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 0;
+      transition: color 0.15s ease, opacity 0.15s ease;
+      padding: 10px;
+      margin: 0;
+      line-height: 1;
+      flex-shrink: 0;
+      background: transparent;
+      border: none;
+      color: #2f3333;
+    }
+
+    .sim-modal-content > .sim-modal-close {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 20;
+    }
+
+    .sim-modal-content > .sim-modal-close:hover,
+    .sim-modal-content > .sim-modal-close:focus-visible {
+      color: #000;
+      opacity: 0.85;
+      outline: none;
+    }
+
+    .sim-modal-close svg {
+      width: 26px;
+      height: 26px;
+      display: block;
+    }
+
+    .tank-image-overlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .tank-image-buttons {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      display: grid;
+      gap: 8px;
+    }
+
+    .tank-image-btn {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 9px 13px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      background: rgba(250, 249, 248, 0.8);
+      backdrop-filter: blur(10px);
+      font-size: 9.6px;
+      text-transform: uppercase;
+      letter-spacing: 0.48px;
+      font-weight: 700;
+      color: var(--text-dark);
+      line-height: 14.4px;
+    }
+
+    .health {
+      margin: 34px 2px 0 40px;
+      display: grid;
+      grid-template-columns: minmax(200px, 258px) 1fr;
+      column-gap: 24px;
+      align-items: start;
+      justify-items: start;
+    }
+
+    .health-copy {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      padding-left: 0;
+      min-width: 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .health-title {
+      margin: 34px 21px 16px;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .health-gauge {
+      position: relative;
+      width: 235.664px;
+      height: 186.199px;
+    }
+
+    .meter-wrapper {
+      max-width: 500px;
+      position: relative;
+      transform: translateY(18px);
+      width: 100%;
+      z-index: 2;
+    }
+
+    .gauge-svg {
+      cursor: default;
+      height: auto;
+      overflow: visible;
+      width: 100%;
+    }
+
+    .gauge-base {
+      fill: none;
+      stroke: url(#healthGaugeGradient);
+      stroke-linecap: round;
+      stroke-width: 16;
+    }
+
+    .knob-pill {
+      cursor: default;
+      fill: #fff;
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+      transition: transform 0.1s ease-out;
+    }
+
+    .health-cory {
+      position: absolute;
+      left: 77px;
+      top: 34px;
+      width: 73.735px;
+      height: 132.3px;
+      display: block;
+      z-index: 3;
+      pointer-events: none;
+    }
+
+    .stat-main {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .stat-main .pct {
+      font-size: 48px;
+      line-height: 48px;
+      color: #34c96b;
+      font-weight: 700;
+    }
+
+    .delta {
+      margin-top: 9px;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+      color: #005eb4;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 700;
+    }
+
+    .delta-arrow {
+      font-size: 12px;
+      line-height: 1;
+      display: inline-block;
+      transform: translateY(-1px);
+    }
+
+    .stat-copy {
+      margin-top: 10px;
+      font-size: 12px;
+      line-height: 19.5px;
+      color: var(--text-muted);
+      max-width: none;
+    }
+
+    .tank-status {
+      margin-top: 6px;
+      margin-bottom: 0;
+      width: 100%;
+      max-width: 249px;
+      font-size: 10px;
+      line-height: 15px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    .tank-status strong {
+      color: #34c96b;
+    }
+
+    .core-vitals {
+      margin: 16px 24px 24px;
+    }
+
+    .core-vitals-head {
+      margin: 0 0 12px;
+    }
+
+    .core-vitals h3 {
+      margin: 0;
+      font-size: 12px;
+      line-height: 18px;
+      text-transform: uppercase;
+      letter-spacing: -0.12px;
+      color: var(--text-muted);
+    }
+
+    .vitals-history {
+      border: 0;
+      background: transparent;
+      padding: 0;
+      font-size: 12px;
+      line-height: 18px;
+      text-transform: uppercase;
+      letter-spacing: -0.12px;
+      color: var(--blue);
+      font-weight: 700;
+      font-family: "Inter", sans-serif;
+      cursor: pointer;
+    }
+
+    .vitals-history-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: grid;
+      place-items: center;
+      padding: 24px;
+    }
+
+    .vitals-history-modal[aria-hidden="true"] {
+      display: none;
+    }
+
+    .vitals-history-dialog {
+      width: min(1280px, calc(100vw - 40px));
+      max-height: calc(100vh - 40px);
+      overflow: auto;
+      border-radius: 10px;
+      background: #faf9f8;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      padding: 20px;
+      position: relative;
+      box-shadow: 0 20px 70px rgba(0, 0, 0, 0.35);
+    }
+
+    .vitals-history-close {
+      position: absolute;
+      right: 29px;
+      top: 37px;
+      border: 0;
+      background: transparent;
+      font-size: 28px;
+      line-height: 1;
+      color: #2f3333;
+      cursor: pointer;
+      z-index: 2;
+    }
+
+    .vh-card,
+    .vh-section {
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .vh-card {
+      padding: 18px 16px 12px;
+    }
+
+    .vh-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+      padding: 0 8px;
+    }
+
+    .vh-title {
+      font-size: 12px;
+      line-height: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #5b605f;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .vh-title .accent {
+      color: #ff6200;
+    }
+
+    .vh-title .caret {
+      width: 11px;
+      height: 5px;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+
+    .vh-range {
+      display: flex;
+      font-size: 12px;
+      line-height: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--shadow);
+      margin-right: 20px;
+    }
+
+    .vh-range span {
+      padding: 4px 12px 3px;
+      color: #5b605f;
+      background: #fff;
+      min-width: 73px;
+      text-align: center;
+    }
+
+    .vh-range .active {
+      color: #fff;
+      background: #0075de;
+      min-width: 73px;
+    }
+
+    .vh-chart {
+      display: grid;
+      grid-template-columns: 44px 1fr;
+      gap: 10px;
+      margin: 4px 0 6px;
+      align-items: end;
+    }
+
+    .vh-axis-y {
+      display: grid;
+      height: 164px;
+      align-content: space-between;
+      font-size: 14px;
+      line-height: 16px;
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      color: #000;
+      padding-left: 2px;
+      margin-bottom: 29px;
+    }
+
+    .vh-bars-wrap {
+      height: 178px;
+      position: relative;
+      padding: 14px 2px 0;
+    }
+
+    .vh-chart-card .vh-range span {
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .vh-title-metric {
+      display: inline-block;
+      vertical-align: middle;
+      margin-left: 2px;
+    }
+
+    .vh-metric-select {
+      appearance: none;
+      -webkit-appearance: none;
+      border: 0;
+      background-color: transparent;
+      font: inherit;
+      font-size: 12px;
+      line-height: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+      cursor: pointer;
+      padding: 0 16px 0 0;
+      margin: 0;
+      background-image: url("../assets/vital-history-b1eda2542cd4acc28315a4d4c41ebcb6e73d677b.svg");
+      background-repeat: no-repeat;
+      background-position: right 2px center;
+      background-size: 11px 5px;
+      color: #ff6200;
+      max-width: min(220px, 42vw);
+      text-overflow: ellipsis;
+    }
+
+    .vh-metric-select:focus {
+      outline: 2px solid rgba(0, 117, 222, 0.45);
+      outline-offset: 2px;
+      border-radius: 4px;
+    }
+
+    .vh-chart-card[data-vh-metric="temperature"] .vh-metric-select {
+      color: #ff6200;
+    }
+
+    .vh-chart-card[data-vh-metric="ph"] .vh-metric-select {
+      color: #0075de;
+    }
+
+    .vh-chart-card[data-vh-metric="salinity"] .vh-metric-select {
+      color: #0d9488;
+    }
+
+    .vh-chart-card[data-vh-metric="redox"] .vh-metric-select {
+      color: #8727ba;
+    }
+
+    .vh-bars {
+      height: 164px;
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+      justify-content: stretch;
+    }
+
+    .vh-bars .vh-bar {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    .vh-bar {
+      border-radius: 10px 10px 0 0;
+      background: rgba(255, 165, 109, 0.24);
+      min-height: 8px;
+      position: relative;
+      transition: background-color 0.2s ease;
+      cursor: pointer;
+    }
+
+    .vh-bar:hover {
+      background: #ffa56d;
+    }
+
+    .vh-bar.vh-bar--today {
+      box-shadow: 0 0 0 2px #0075de;
+      background: rgba(255, 165, 109, 0.42);
+    }
+
+    .vh-bar.vh-bar--today:hover {
+      background: #ff9a55;
+    }
+
+    .vh-x span.vh-x-label--today {
+      color: #0075de;
+      font-weight: 800;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+    }
+
+    .vh-bar-label {
+      position: absolute;
+      bottom: 100%;
+      left: 50%;
+      margin-bottom: 6px;
+      font-size: 11px;
+      line-height: 12px;
+      font-weight: 700;
+      color: #2693ff;
+      transform: translateX(-50%);
+      white-space: nowrap;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease;
+    }
+
+    .vh-bar:hover .vh-bar-label {
+      opacity: 1;
+    }
+
+    .vh-baseline {
+      width: 100%;
+      height: 5px;
+      display: block;
+      margin-top: 0;
+    }
+
+    .vh-x {
+      display: flex;
+      gap: 6px;
+      margin-top: 8px;
+      text-align: center;
+      font-size: 10px;
+      line-height: 14px;
+      text-transform: uppercase;
+      letter-spacing: 0.4px;
+      font-weight: 700;
+      color: #2f3333;
+    }
+
+    .vh-x span {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+
+    .vh-grid-two {
+      margin-top: 24px;
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 24px;
+    }
+
+    .vh-section {
+      padding: 22px 20px;
+      min-height: 248px;
+    }
+
+    .vh-h3 {
+      margin: 0 0 18px;
+      font-size: 12px;
+      line-height: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: #5b605f;
+      font-weight: 700;
+    }
+
+    .vh-history-item {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 12px;
+      padding-bottom: 10px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .vh-history-item:last-of-type {
+      border-bottom: 0;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .vh-date {
+      color: #ff6200;
+      font-size: 14px;
+      line-height: 13px;
+      font-weight: 700;
+    }
+
+    .vh-date strong {
+      display: block;
+      margin-top: 4px;
+      color: #2f3333;
+      font-size: 28px;
+      line-height: 24px;
+      font-weight: 300;
+    }
+
+    .vh-history-item h4 {
+      margin: 4px 0 0;
+      font-size: 14px;
+      line-height: 20px;
+      color: #2f3333;
+      font-weight: 700;
+    }
+
+    .vh-full-btn {
+      margin-top: 18px;
+      width: 100%;
+      border: 0;
+      border-radius: 4px;
+      background: #0075de;
+      color: #f6f7ff;
+      font-size: 12px;
+      line-height: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+      padding: 14px 12px;
+    }
+
+    .vh-pred-item {
+      position: relative;
+      padding: 0 0 12px 22px;
+      margin-bottom: 12px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    }
+
+    .vh-pred-item:last-child {
+      margin-bottom: 0;
+      border-bottom: 0;
+      padding-bottom: 0;
+    }
+
+    .vh-pred-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 3px;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: #2ecc71;
+    }
+
+    .vh-pred-item h4 {
+      margin: 0;
+      font-size: 14px;
+      line-height: 20px;
+      color: #2f3333;
+      font-weight: 700;
+    }
+
+    .vh-pred-item p {
+      margin: 2px 0 0;
+      font-size: 12px;
+      line-height: 16px;
+      color: #5b605f;
+    }
+
+    .vh-readiness {
+      margin-top: 22px;
+      position: relative;
+      padding: 18px 18px 16px;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+    }
+
+    .vh-readiness-strip-wrap {
+      position: relative;
+      margin-top: 4px;
+    }
+
+    .vh-readiness-strip {
+      width: 100%;
+      display: block;
+      margin-top: 0;
+      aspect-ratio: 1129.48 / 102.871;
+      height: auto;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    /* Badge centers = ring centers in vital-history-6a9df19… viewBox 0 0 1129.48 102.871 */
+    .vh-readiness-badges {
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+    }
+
+    .vh-readiness-badge {
+      position: absolute;
+      bottom: 1px;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      font-size: 12px;
+      font-weight: 700;
+      line-height: 1;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.12);
+      border: 2px solid #fff;
+    }
+
+    .vh-readiness-badge:nth-child(1) {
+      left: calc(100% * 51.9376 / 1129.48);
+      transform: translate(calc(-50% + 1px), 8px);
+      background: #0075de;
+      color: #fff;
+    }
+
+    .vh-readiness-badge:nth-child(2) {
+      left: calc(100% * 255.069 / 1129.48);
+      transform: translate(calc(-50% + 2px), 8px);
+      background: #2ecc71;
+      color: #fff;
+    }
+
+    .vh-readiness-badge:nth-child(3) {
+      left: calc(100% * 460.493 / 1129.48);
+      transform: translate(calc(-50% + 3px), 8px);
+      background: #8727ba;
+      color: #fff;
+    }
+
+    .vh-readiness-badge:nth-child(4) {
+      left: calc(100% * 665.917 / 1129.48);
+      transform: translate(calc(-50% + 4px), 8px);
+      background: #ff6200;
+      color: #fff;
+    }
+
+    .vh-readiness-badge:nth-child(5) {
+      left: calc(100% * 871.342 / 1129.48);
+      transform: translate(calc(-50% + 5px), 8px);
+      background: #ffdd00;
+      color: #2f3333;
+    }
+
+    .vh-readiness-badge:nth-child(6) {
+      left: calc(100% * 1076.77 / 1129.48);
+      transform: translate(calc(-50% + 6px), 8px);
+      background: #ff83e4;
+      color: #2f3333;
+    }
+
+    .vh-status {
+      margin-top: 22px;
+      background: rgba(0, 117, 222, 0.1);
+      border-radius: 7px;
+      display: grid;
+      grid-template-columns: 1fr 1px 1fr;
+      align-items: center;
+      padding: 16px 16px 20px;
+      gap: 18px;
+    }
+
+    .vh-divider {
+      width: 1px;
+      height: auto;
+      min-height: 72px;
+      align-self: stretch;
+      background: rgba(0, 117, 222, 0.35);
+    }
+
+    .vh-status > div:first-child .vh-status-label {
+      margin-bottom: 14px;
+    }
+
+    .vh-status .vh-status-stage-title {
+      margin: 16px 0 18px;
+      font-size: 30px;
+      line-height: 1.07;
+      font-weight: 600;
+      color: #2f3333;
+    }
+
+    .vh-status > div:first-child .vh-status-copy {
+      margin-top: 0;
+      margin-bottom: 0;
+      line-height: 1.45;
+    }
+
+    .vh-status-label {
+      margin: 0;
+      font-size: 11.6px;
+      line-height: 15px;
+      text-transform: uppercase;
+      letter-spacing: 1.15px;
+      color: #5b605f;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .vh-status-label img {
+      width: 18px;
+      height: 18px;
+    }
+
+    .vh-status h4 {
+      margin: 4px 0 8px;
+      font-size: 28px;
+      line-height: 30px;
+      font-weight: 600;
+      color: #0075de;
+    }
+
+    .vh-status p {
+      margin: 0;
+      font-size: 11.6px;
+      line-height: 15px;
+      color: #5b605f;
+    }
+
+    .vh-status-copy {
+      margin-bottom: 10px;
+    }
+
+    .vh-status-note {
+      margin-top: 18px;
+    }
+
+    .vh-progress {
+      margin-top: 8px;
+      margin-bottom: 6px;
+      height: 4px;
+      border-radius: 100px;
+      background: rgba(0, 117, 222, 0.2);
+      overflow: hidden;
+    }
+
+    .vh-progress span {
+      display: block;
+      width: 6%;
+      height: 100%;
+      background: #0075de;
+      border-radius: 100px;
+    }
+
+    @media (max-width: 1000px) {
+      .vh-grid-two {
+        grid-template-columns: 1fr;
+      }
+
+      .vh-x {
+        font-size: 10px;
+      }
+    }
+
+    .vitals-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .vital {
+      height: 107px;
+      border: 1px solid var(--card-border);
+      border-radius: 8px;
+      box-shadow: var(--shadow);
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .vital-flip {
+      padding: 0;
+      perspective: 1000px;
+      overflow: hidden;
+    }
+
+    .vital-flip-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.45s ease;
+      transform-style: preserve-3d;
+    }
+
+    .vital-flip:hover .vital-flip-inner,
+    .vital-flip:focus-within .vital-flip-inner {
+      transform: rotateX(180deg);
+    }
+
+    .vital-face {
+      position: absolute;
+      inset: 0;
+      padding: 12px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      backface-visibility: hidden;
+      border-radius: 8px;
+      background: #fff;
+    }
+
+    .vital-face.back {
+      transform: rotateX(180deg);
+      background: rgba(255, 165, 109, 0.15);
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+    }
+
+    .vital-back-content {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 8px;
+      width: 100%;
+      max-width: none;
+      margin: 0 auto;
+    }
+
+    .vital-cory-icon {
+      width: 72px;
+      height: 72px;
+      flex: none;
+      margin-left: -8px;
+    }
+
+    .vital-back-copy {
+      margin: 0;
+      font-size: 12px;
+      line-height: 15px;
+      color: var(--text-dark);
+      flex: 1;
+    }
+
+    .vital-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 10px;
+      line-height: 15px;
+      font-weight: 700;
+    }
+
+    .vital-top .trend {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      color: #005eb4;
+    }
+
+    .trend-arrow {
+      font-size: 10px;
+      line-height: 1;
+      display: inline-block;
+      transform: translateY(-1px);
+    }
+
+    .vital-title {
+      font-size: 10px;
+      line-height: 15px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    .vital-value {
+      font-size: 28px;
+      line-height: 28px;
+      letter-spacing: -0.45px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .assignments {
+      grid-column: 2;
+      grid-row: 1;
+      min-height: 360px;
+      /* reduced to allow larger simulation card while keeping gap */
+      height: auto;
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .section-title {
+      margin: 0;
+      font-size: 12px;
+      line-height: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .assignment-list {
+      margin-top: 32px;
+      display: grid;
+      gap: 25px;
+      align-content: start;
+      flex: 1;
+    }
+
+    .assignment {
+      display: grid;
+      grid-template-columns: 41px 1fr;
+      gap: 16px;
+    }
+
+    a.assignment {
+      text-decoration: none;
+      color: inherit;
+      border-radius: 8px;
+      margin: 0 -6px;
+      padding: 8px 6px;
+      transition: background 0.15s ease;
+    }
+
+    a.assignment:hover,
+    a.assignment:focus-visible {
+      background: rgba(0, 117, 222, 0.06);
+      outline: none;
+    }
+
+    a.assignment:hover .assignment-title,
+    a.assignment:focus-visible .assignment-title {
+      color: var(--blue);
+    }
+
+    .assignment.bordered {
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--divider);
+    }
+
+    a.assignment.bordered {
+      margin-bottom: 0;
+      border-radius: 8px 8px 0 0;
+    }
+
+    .assignment-icon {
+      width: 40.667px;
+      height: 40.667px;
+      object-fit: contain;
+      display: block;
+    }
+
+    .assignment-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 12px;
+      margin-bottom: 4px;
+    }
+
+    .assignment-title {
+      margin: 0;
+      font-size: 14px;
+      line-height: 20px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .badge {
+      border-radius: 2px;
+      padding: 2px 8px;
+      font-size: 10px;
+      line-height: 15px;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .badge.warn {
+      background: #fff7ed;
+      color: #ea580c;
+    }
+
+    .badge.muted {
+      background: #edeeed;
+      color: var(--text-muted);
+    }
+
+    .assignment-copy {
+      margin: 0;
+      font-size: 12px;
+      line-height: 16px;
+      color: var(--text-muted);
+    }
+
+    .primary-btn {
+      margin-top: 24px;
+      height: 44px;
+      border-radius: 4px;
+      border: none;
+      background: var(--blue);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      color: #f6f7ff;
+      font-size: 12px;
+      line-height: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;
+    }
+
+    .primary-btn:hover,
+    .primary-btn:focus-visible {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.35);
+      filter: brightness(1.05);
+    }
+
+    .primary-btn:active {
+      transform: translateY(0);
+    }
+
+    /* Coral Simulation — match View All Coursework primary; small reset = live tank enlarge */
+    .sim-header-row .primary-btn {
+      margin-top: 0;
+      flex-shrink: 0;
+      padding-left: 18px;
+      padding-right: 18px;
+    }
+
+    .sim-modal-score-big .primary-btn {
+      margin-top: 12px;
+    }
+
+    .sim-reset-fab {
+      flex: none;
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      min-height: 36px;
+      background: #fff;
+      border-radius: 50%;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s;
+      pointer-events: auto;
+      position: relative;
+      z-index: 2;
+    }
+
+    .sim-reset-fab:hover,
+    .sim-reset-fab:focus-visible {
+      transform: scale(1.1);
+      outline: none;
+    }
+
+    .sim-reset-fab img {
+      width: 16px;
+      height: 16px;
+      display: block;
+      object-fit: contain;
+      pointer-events: none;
+    }
+
+    .team-score {
+      grid-column: 2;
+      grid-row: 2;
+      min-height: 460px;
+      height: auto;
+      padding: 0;
+      /* let the inner sim-card control padding so it fills the article */
+      position: relative;
+      margin-top: -12px;
+    }
+
+    /* Simulation card placed in the Team Score slot for Student view */
+    .sim-card {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto 1fr;
+      /* header then content; let content fill */
+      gap: 18px;
+      align-items: stretch;
+      padding: 25px;
+      /* match `assignments` padding */
+      height: 100%;
+      min-height: 460px;
+      /* keep it taller to match request */
+      background: transparent;
+      /* remove inner white box so it fills the outer card */
+      border-radius: 0;
+      box-shadow: none;
+      border: none;
+      align-content: start;
+      /* ensure header sits at the top */
+      position: relative;
+      /* Cory can sit above simulation text; only actual controls opt back into pointer events. */
+      pointer-events: none;
+    }
+
+    .team-score .sim-card input,
+    .team-score .sim-card button {
+      position: relative;
+      z-index: 999;
+      pointer-events: auto;
+    }
+
+    .sim-header-row {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 12px;
+      /* more breathing room under header */
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      margin-top: 0;
+    }
+
+    .sim-title {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+      color: #5b605f;
+    }
+
+    .sim-score-label {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+      color: #5b605f;
+    }
+
+    .sim-score {
+      color: #16a34a;
+      font-weight: 700;
+      font-size: 14px;
+    }
+
+    .sim-score-group {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .sim-score-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 4px;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;
+    }
+
+    .sim-score-row .sim-score-group {
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .sim-left {
+      background: #111;
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      grid-row: 2 / span 1;
+      position: relative;
+      pointer-events: none;
+      /* Neutralize overlap */
+    }
+
+    .sim-left>img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .sim-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 24px;
+      padding-right: 6px;
+    }
+
+    .sim-metric {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .metric-label {
+      color: #2f3333;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 8px;
+      line-height: 1.4;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .metric-label img {
+      flex: none;
+      object-fit: contain;
+    }
+
+    .metric-label img[src*="7bd8d3c0"] {
+      width: 8px;
+      height: 15px;
+    }
+
+    .metric-label img[src*="3c41eed2"] {
+      width: 14px;
+      height: 14px;
+    }
+
+    .metric-label img[src*="4dea0953"] {
+      width: 12px;
+      height: 15px;
+    }
+
+    .metric-label img[src*="6267a499"] {
+      width: 12px;
+      height: 15px;
+    }
+
+    /* .metric-row and .sim-slider styles are defined globally above */
+
+    .metric-value {
+      color: #0075de;
+      font-weight: 700;
+      flex: 0 0 64px;
+      text-align: left;
+      pointer-events: none;
+      user-select: none;
+      margin-left: 20px;
+      /* Spacing via margin */
+    }
+
+    .metric-track {
+      position: relative;
+      flex: 1 1 auto;
+      height: 8px;
+      background: #eef2f3;
+      border-radius: 999px;
+      margin: 0 12px 0 0;
+      cursor: pointer;
+    }
+
+    .metric-thumb {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      background: #16a34a;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+      transition: left 0.1s ease-out;
+    }
+
+    @media (max-width:1000px) {
+      .sim-card {
+        grid-template-columns: 1fr;
+      }
+
+      .sim-header-row {
+        padding-bottom: 12px;
+      }
+    }
+
+    .team-row {
+      margin-top: 78px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .team-name {
+      margin: 0;
+      font-size: 39px;
+      line-height: 38px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .team-rank {
+      margin: 0;
+      font-size: 16.5px;
+      line-height: 22px;
+      font-weight: 900;
+      color: var(--blue);
+    }
+
+    .progress {
+      margin-top: 16px;
+      background: #dfe3e2;
+      border-radius: 12px;
+      height: 13px;
+      overflow: hidden;
+    }
+
+    .progress>span {
+      display: block;
+      height: 100%;
+      width: 79.89%;
+      background: #ffa56d;
+    }
+
+    .points {
+      margin: 8px 0 0;
+      text-align: right;
+      font-size: 10px;
+      line-height: 13.5px;
+      color: var(--text-muted);
+    }
+
+    .leaderboard {
+      margin-top: 34px;
+      font-size: 12px;
+      line-height: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      color: var(--blue);
+      font-weight: 700;
+    }
+
+
+    @media (max-width: 1280px) {
+      .top-nav-inner {
+        width: 100%;
+        padding: 0 12px;
+      }
+
+      .page {
+        width: 100%;
+        padding: 88px 12px 24px;
+      }
+
+    }
+
+    .health-title {
+      margin: 0 0 4px;
+      font-size: 16px;
+      font-weight: 700;
+      color: var(--text-dark);
+    }
+
+    .health .health-copy .health-title {
+      margin-top: 13px;
+      margin-bottom: 0;
+    }
+
+    .health .health-copy .stat-main {
+      margin-top: 4px;
+    }
+
+    .health .health-copy .stat-copy {
+      margin-top: 4px;
+    }
+
+    .health .health-copy .tank-status {
+      margin-top: 0;
+    }
+
+
+    .menu-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 8px;
+      z-index: 40;
+    }
+
+    .menu-toggle span {
+      display: block;
+      width: 22px;
+      height: 2px;
+      background: var(--text-dark);
+      border-radius: 2px;
+      transition: 0.3s;
+    }
+
+    @media (max-width: 1000px) {
+      .menu-toggle {
+        display: flex;
+      }
+
+      .nav-links {
+        display: flex;
+        position: fixed;
+        top: 64px;
+        right: 0;
+        width: 280px;
+        height: calc(100vh - 64px);
+        background: #ffffff;
+        flex-direction: column;
+        padding: 16px 24px;
+        box-shadow: -10px 0 20px rgba(0, 0, 0, 0.05);
+        border-left: 1px solid rgba(0, 0, 0, 0.08);
+        gap: 0;
+        z-index: 100;
+        transform: translateX(100%);
+        transition: transform 0.3s ease;
+      }
+
+      .nav-links.open {
+        transform: translateX(0);
+      }
+
+      .nav-link {
+        width: 100%;
+        padding: 16px 0;
+        border-bottom: 1px solid var(--divider);
+        height: auto;
+      }
+
+      .nav-link.active {
+        border-bottom-color: var(--blue);
+      }
+
+      .menu-toggle.open span:nth-child(1) {
+        transform: translateY(7px) rotate(45deg);
+      }
+
+      .menu-toggle.open span:nth-child(2) {
+        opacity: 0;
+      }
+
+      .menu-toggle.open span:nth-child(3) {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .tank-card,
+      .assignments,
+      .team-score {
+        grid-column: auto;
+        grid-row: auto;
+        margin-top: 0;
+      }
+
+      .page {
+        padding-bottom: max(120px, min(220px, 28vh));
+      }
+
+      .cory-dock #cory-iframe {
+        --cory-open-width: min(400px, calc(100vw - 16px));
+        --cory-open-height: min(600px, 55vh);
+      }
+    }
+
+    /* Below sim controls while closed; rises over them while the assistant is open. */
+    .cory-dock {
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      z-index: 998;
+      pointer-events: none;
+    }
+
+    .cory-dock #cory-iframe {
+      --cory-open-width: 400px;
+      --cory-open-height: 600px;
+      display: block;
+      width: 112px;
+      height: 112px;
+      border: none;
+      pointer-events: auto;
+      background-color: transparent;
+      transition: width 0.18s ease, height 0.18s ease;
+    }
+
+    .cory-dock:hover {
+      z-index: 999;
+    }
+
+    .cory-dock:hover #cory-iframe {
+      width: var(--cory-open-width);
+      height: var(--cory-open-height);
+    }
+  </style>
+</head>
+
+<body>
+  <header class="top-nav">
+    <div class="top-nav-inner">
+
+
+      <button class="menu-toggle" aria-label="Toggle menu"
+        onclick="this.classList.toggle('open'); document.querySelector('.nav-links').classList.toggle('open')">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <img class="brand" src="../assets/CK word logo.svg" alt="Coral Keepers" />
+      <nav class="nav-links" aria-label="Primary">
+        <a class="nav-link active" href="index.html">Home</a>
+        <a class="nav-link" href="learn.html">Learn</a>
+        <a class="nav-link" href="announcements.html">Announcements</a>
+        <a class="nav-link" href="calendar.html">Calendar</a>
+        <a class="nav-link messages-tab" href="messages.html">Messages</a>
+        <a class="nav-link profile-tab" href="profile.html">Profile</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="page">
+    <h1 class="welcome">Welcome Back, Sierra 👋</h1>
+
+    <section class="layout">
+      <article class="card tank-card">
+        <button type="button" class="demo-stress-hitbox" aria-hidden="true" tabindex="-1"></button>
+        <div class="tank-header">
+          <div class="tank-title">
+            <span class="dot"></span>
+            <span>Live Tank Feed</span>
+          </div>
+          <div class="tank-actions">
+            <button class="vitals-history" type="button">View Vital History</button>
+          </div>
+        </div>
+
+        <div class="tank-image-wrap">
+          <img class="tank-image-overlay" src="../assets/Inside tank view.webp" alt="Live tank" />
+          <button class="tank-enlarge" aria-label="Enlarge tank view"
+            onclick="document.getElementById('tankModal').classList.add('active')">
+            <img src="../assets/fcbee645-242b-4d85-89dc-af627b54c189.svg" width="16" height="16" alt="" />
+          </button>
+        </div>
+
+        <div class="health">
+          <div class="health-gauge">
+            <div class="meter-wrapper">
+              <svg id="healthMeterSvg" class="gauge-svg" viewBox="0 0 260 160" aria-label="AI health score arc gauge"
+                role="img">
+                <defs>
+                  <linearGradient id="healthGaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" style="stop-color:#ff5c69;" />
+                    <stop offset="35%" style="stop-color:#ffb020;" />
+                    <stop offset="65%" style="stop-color:#c7dd19;" />
+                    <stop offset="100%" style="stop-color:#34c96b;" />
+                  </linearGradient>
+                </defs>
+                <path class="gauge-base" d="M 8 134 A 114 134 0 0 1 252 134" />
+                <g id="healthKnobGroup">
+                  <rect class="knob-pill" x="-10" y="-20" width="20" height="40" rx="10" />
+                </g>
+              </svg>
+            </div>
+            <img class="health-cory" src="../assets/corymain.svg" alt="Cory" />
+          </div>
+
+          <div class="health-copy">
+            <h3 class="health-title">AI Health Score</h3>
+            <div class="stat-main">
+              <div class="pct">94%</div>
+              <div class="delta">
+                <span class="delta-arrow" aria-hidden="true">↑</span>
+                <span class="delta-value">2.1%</span>
+              </div>
+            </div>
+            <p class="stat-copy">Tank is stable. Automated calcium injection was successful. Bio-filters are working.
+            </p>
+            <p class="tank-status"><span>Tank Status: </span><strong>Stable</strong></p>
+          </div>
+        </div>
+
+        <div class="core-vitals">
+          <div class="core-vitals-head">
+            <h3>Core Vitals</h3>
+          </div>
+          <div class="vitals-grid">
+            <div class="vital vital-flip">
+              <div class="vital-flip-inner">
+                <div class="vital-face front">
+                  <div class="vital-top">
+                    <img src="../assets/7bd8d3c0-7663-4246-86b1-265d54c9882a.svg" width="8" height="15" alt="" />
+                    <span class="trend temp-trend"><span class="trend-arrow" aria-hidden="true">↑</span><span
+                        class="trend-value">0.2°</span></span>
+                  </div>
+                  <div class="vital-title">Temperature</div>
+                  <div class="vital-value">78.2°F</div>
+                </div>
+                <div class="vital-face back">
+                  <div class="vital-back-content">
+                    <img class="vital-cory-icon" src="../assets/coryforcard.svg" alt="Cory" />
+                    <p class="vital-back-copy">Your tank is at an optimal temperature! It is up 0.2° from 78°, which is
+                      nothing to worry about.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="vital vital-flip">
+              <div class="vital-flip-inner">
+                <div class="vital-face front">
+                  <div class="vital-top">
+                    <img src="../assets/3c41eed2-862f-4820-83ce-73a8f4e7e1d3.svg" width="14" height="14" alt="" />
+                    <span class="trend" style="color:#5b605f;"><img
+                        src="../assets/852cb51c-7511-403d-93b0-1ecaf982bb4a.svg" width="8" height="4" alt="" />OK</span>
+                  </div>
+                  <div class="vital-title">pH Level</div>
+                  <div class="vital-value">8.4</div>
+                </div>
+                <div class="vital-face back">
+                  <div class="vital-back-content">
+                    <img class="vital-cory-icon" src="../assets/coryforcard.svg" alt="Cory" />
+                    <p class="vital-back-copy">Your tank has an optimal pH level of 8.4! Great job keeping my family
+                      healthy.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="vital vital-flip">
+              <div class="vital-flip-inner">
+                <div class="vital-face front">
+                  <div class="vital-top">
+                    <img src="../assets/4dea0953-907d-4052-ab20-9cca83cda85c.svg" width="12" height="15" alt="" />
+                    <span class="trend sal-trend"><span class="trend-arrow" aria-hidden="true">↑</span><span
+                        class="trend-value">1 ppt</span></span>
+                  </div>
+                  <div class="vital-title">Salinity</div>
+                  <div class="vital-value">35 ppt</div>
+                </div>
+                <div class="vital-face back">
+                  <div class="vital-back-content">
+                    <img class="vital-cory-icon" src="../assets/coryforcard.svg" alt="Cory" />
+                    <p class="vital-back-copy">Your salinity is currently 35 ppt. Stability is key for a thriving reef,
+                      and you're nailing it!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="vital vital-flip">
+              <div class="vital-flip-inner">
+                <div class="vital-face front">
+                  <div class="vital-top">
+                    <img src="../assets/6267a499-28d2-4255-857c-746abb06886c.svg" width="12" height="15" alt="" />
+                    <span class="trend"><img src="../assets/f309dbce-41bf-4d7a-be65-7449817baa5d.svg" width="8"
+                        height="5" alt="" />NOM</span>
+                  </div>
+                  <div class="vital-title">Redox</div>
+                  <div class="vital-value">380 mV</div>
+                </div>
+                <div class="vital-face back">
+                  <div class="vital-back-content">
+                    <img class="vital-cory-icon" src="../assets/coryforcard.svg" alt="Cory" />
+                    <p class="vital-back-copy">Redox is looking great at 380 mV. High oxygen levels mean your corals are
+                      breathing easy!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card assignments">
+        <h2 class="section-title">My Assignments</h2>
+
+        <div class="assignment-list">
+          <a class="assignment bordered" href="is-coral-animal.html?from=index" aria-label="Open video: Is Coral an Animal?">
+            <img class="assignment-icon" src="../assets/395f9af5-9efc-478e-8d7d-8982f4180639.svg" alt="" />
+            <div>
+              <div class="assignment-head">
+                <h3 class="assignment-title">Is Coral an Animal?</h3>
+                <span class="badge warn">Due April 14, 2026</span>
+              </div>
+              <p class="assignment-copy">Learn the truth about what coral really is</p>
+            </div>
+          </a>
+
+          <a class="assignment bordered" href="reading-coral-101.html?from=index" aria-label="Open reading: Coral 101">
+            <img class="assignment-icon" src="../assets/teacher-course-icon-reading.svg" alt="" />
+            <div>
+              <div class="assignment-head">
+                <h3 class="assignment-title">Coral 101</h3>
+                <span class="badge muted">Due April 14, 2026</span>
+              </div>
+              <p class="assignment-copy">A basic guide for taking care of coral</p>
+            </div>
+          </a>
+
+          <a class="assignment" href="quiz-coral-101.html?from=index" aria-label="Open quiz: Coral 101 QUIZ">
+            <img class="assignment-icon" src="../assets/teacher-assignment-bio348.svg" alt="" />
+            <div>
+              <div class="assignment-head">
+                <h3 class="assignment-title">Coral 101 QUIZ</h3>
+                <span class="badge muted">Due April 14, 2026</span>
+              </div>
+              <p class="assignment-copy">A quiz on the Coral 101 reading assignment</p>
+            </div>
+          </a>
+        </div>
+
+        <button class="primary-btn" type="button" onclick="window.location.href='learn.html'">View All
+          Coursework</button>
+      </article>
+
+      <article class="card team-score">
+        <div class="sim-card" role="region" aria-label="Coral Simulation">
+          <div class="sim-header-row">
+            <div class="sim-title">Coral Simulation</div>
+            <button type="button" id="btn-enlarge-sim" class="primary-btn">Expand Simulation</button>
+          </div>
+
+          <div class="sim-left">
+            <img src="../assets/Inside tank view.webp" alt="Simulation preview" id="cory-avatar" />
+          </div>
+
+          <div class="sim-right">
+            <div class="sim-score-row">
+              <div class="sim-score-group">
+                <div class="sim-score" id="health-score-display">92%</div>
+                <div class="sim-score-label">AI Health Score</div>
+              </div>
+              <button type="button" id="btn-reset-small" class="sim-reset-fab" title="Reset to Ideal Parameters"
+                aria-label="Reset to ideal parameters">
+                <img src="../assets/refresh.svg" alt="">
+              </button>
+            </div>
+            <div class="sim-metric">
+              <div class="metric-label"><span>Temperature</span><img
+                  src="../assets/7bd8d3c0-7663-4246-86b1-265d54c9882a.svg" alt="" /></div>
+              <div class="metric-row">
+                <input type="range" id="temp-slider" min="60" max="100" step="1" value="78" class="sim-slider"
+                  data-type="temperature">
+                <div class="metric-value">78° F</div>
+              </div>
+            </div>
+
+            <div class="sim-metric">
+              <div class="metric-label"><span>Salinity</span><img
+                  src="../assets/4dea0953-907d-4052-ab20-9cca83cda85c.svg" alt="" /></div>
+              <div class="metric-row">
+                <input type="range" id="salinity-slider" min="20" max="50" step="1" value="35" class="sim-slider"
+                  data-type="salinity">
+                <div class="metric-value">35 PPT</div>
+              </div>
+            </div>
+
+            <div class="sim-metric">
+              <div class="metric-label"><span>pH Level</span><img
+                  src="../assets/3c41eed2-862f-4820-83ce-73a8f4e7e1d3.svg" alt="" /></div>
+              <div class="metric-row">
+                <input type="range" id="ph-slider" min="7.0" max="9.0" step="0.1" value="8.2" class="sim-slider"
+                  data-type="ph">
+                <div class="metric-value">8.20</div>
+              </div>
+            </div>
+
+            <div class="sim-metric">
+              <div class="metric-label"><span>Redox</span><img src="../assets/6267a499-28d2-4255-857c-746abb06886c.svg"
+                  alt="" /></div>
+              <div class="metric-row">
+                <input type="range" id="redox-slider" min="100" max="600" step="10" value="350" class="sim-slider"
+                  data-type="redox">
+                <div class="metric-value">350 mV</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+
+
+  <div class="vitals-history-modal" id="vitalHistoryModal" aria-hidden="true">
+    <div class="vitals-history-dialog" role="dialog" aria-label="Vital history details">
+      <button class="vitals-history-close" type="button" aria-label="Close vital history">×</button>
+
+      <section class="vh-card vh-chart-card" data-vh-metric="temperature">
+        <div class="vh-head">
+          <p class="vh-title">Tank Overview:
+            <span class="vh-title-metric">
+              <select id="vhMetricSelect" class="vh-metric-select js-vh-metric-select" aria-label="Vital metric">
+                <option value="temperature" selected>Temperature</option>
+                <option value="ph">pH Level</option>
+                <option value="salinity">Salinity</option>
+                <option value="redox">Redox</option>
+              </select>
+            </span>
+          </p>
+          <div class="vh-range" role="tablist" aria-label="Chart time range">
+            <span class="active" role="tab" aria-selected="true" data-vh-range="week" tabindex="0">Week</span>
+            <span role="tab" aria-selected="false" data-vh-range="all" tabindex="0">All Time</span>
+          </div>
+        </div>
+        <div class="vh-chart">
+          <div class="vh-axis-y js-vh-axis"><span></span><span></span><span></span><span></span></div>
+          <div>
+            <div class="vh-bars-wrap">
+              <div class="vh-bars js-vh-bars"></div>
+            </div>
+            <img class="vh-baseline" src="../assets/vital-history-eb2d9e5867c65d7a580e3a369a38cdc79aeedeeb.svg"
+              alt="" />
+            <div class="vh-x js-vh-xlabels"></div>
+          </div>
+        </div>
+      </section>
+
+      <div class="vh-grid-two">
+        <section class="vh-section">
+          <h3 class="vh-h3">Tank Maintenance History</h3>
+          <div class="vh-history-item">
+            <div class="vh-date">April<strong>22</strong></div>
+            <h4>Tank Cleaned</h4>
+          </div>
+          <div class="vh-history-item">
+            <div class="vh-date">April<strong>28</strong></div>
+            <h4>Temperature Sensor Recalibrated</h4>
+          </div>
+          <div class="vh-history-item">
+            <div class="vh-date">April<strong>28</strong></div>
+            <h4>Salinity Sensor Recalibrated</h4>
+          </div>
+          <button class="vh-full-btn" type="button">View Full History</button>
+        </section>
+
+        <section class="vh-section">
+          <h3 class="vh-h3">Tank Predictions</h3>
+          <div class="vh-pred-item">
+            <h4>Recalibrate Sensors</h4>
+            <p>According to the tank data, you'll need to recalibrate your sensors this week.</p>
+          </div>
+          <div class="vh-pred-item">
+            <h4>Extra Cleaning Needed</h4>
+            <p>Due to recent algae overgrowth in the tank, some extra cleaning might be necessary.</p>
+          </div>
+          <div class="vh-pred-item">
+            <h4>Filter Replacement Alert</h4>
+            <p>The aquarium filter should be checked and possibly replaced to maintain water quality.</p>
+          </div>
+          <div class="vh-pred-item">
+            <h4>Temperature Adjustment Required</h4>
+            <p>Temperature fluctuations detected; consider adjusting the heater to stabilize the environment.</p>
+          </div>
+        </section>
+      </div>
+
+      <section class="vh-readiness">
+        <h3 class="vh-h3">Coral Readiness Meter</h3>
+        <div class="vh-readiness-strip-wrap">
+          <img class="vh-readiness-strip" src="../assets/vital-history-6a9df19e881abb09e656fdcd60cbaf2fc8d9412c.svg"
+            alt="Coral readiness stages" />
+          <div class="vh-readiness-badges" aria-hidden="true">
+            <span class="vh-readiness-badge">1</span>
+            <span class="vh-readiness-badge">2</span>
+            <span class="vh-readiness-badge">3</span>
+            <span class="vh-readiness-badge">4</span>
+            <span class="vh-readiness-badge">5</span>
+            <span class="vh-readiness-badge">6</span>
+          </div>
+        </div>
+        <div class="vh-status">
+          <div>
+            <p class="vh-status-label"><img src="../assets/vital-history-8176ea54be1274f68a8d668fd3e38fe072edc1d6.svg"
+                alt="" />Current Status</p>
+            <h4 class="vh-status-stage-title">Attachment Stage</h4>
+            <p class="vh-status-copy">keep monitoring! Stable conditions will ensure your coral thrives!</p>
+          </div>
+          <div class="vh-divider"></div>
+          <div>
+            <p class="vh-status-label">Readiness Score</p>
+            <h4>12%</h4>
+            <div class="vh-progress"><span></span></div>
+            <p class="vh-status-note">On the path to restoration!</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+
+
+
+  <div class="sim-modal" id="simModal" onclick="if(event.target === this) this.classList.remove('active')">
+    <div class="sim-modal-content" onclick="event.stopPropagation()">
+      <button class="sim-modal-close" aria-label="Close simulation" type="button">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M7 7L17 17M17 7L7 17" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+        </svg>
+      </button>
+      <div class="sim-modal-header">
+        <div class="sim-title">Coral Simulation</div>
+      </div>
+
+      <div class="sim-modal-image">
+        <img src="../assets/Inside tank view.webp" alt="Simulation preview fullscreen" id="cory-avatar-modal" />
+      </div>
+
+      <div class="sim-modal-metrics">
+        <div class="sim-modal-score-big">
+          <div class="sim-score" id="health-score-display-modal">92%</div>
+          <div class="sim-score-label">AI Health Score</div>
+          <button type="button" id="btn-reset-large" class="primary-btn">Reset Parameters</button>
+        </div>
+
+        <div class="sim-metric">
+          <div class="metric-label"><img src="../assets/7bd8d3c0-7663-4246-86b1-265d54c9882a.svg" alt="" /><span>Temperature</span></div>
+          <div class="metric-row">
+            <input type="range" id="temp-slider-modal" min="60" max="100" step="1" value="78" class="sim-slider"
+              data-type="temperature">
+            <div class="metric-value">78° F</div>
+          </div>
+        </div>
+
+        <div class="sim-metric">
+          <div class="metric-label"><img src="../assets/4dea0953-907d-4052-ab20-9cca83cda85c.svg" alt="" /><span>Salinity</span></div>
+          <div class="metric-row">
+            <input type="range" id="salinity-slider-modal" min="20" max="50" step="1" value="35" class="sim-slider"
+              data-type="salinity">
+            <div class="metric-value">35 PPT</div>
+          </div>
+        </div>
+
+        <div class="sim-metric">
+          <div class="metric-label"><img src="../assets/3c41eed2-862f-4820-83ce-73a8f4e7e1d3.svg" alt="" /><span>pH Level</span></div>
+          <div class="metric-row">
+            <input type="range" id="ph-slider-modal" min="7.0" max="9.0" step="0.1" value="8.2" class="sim-slider"
+              data-type="ph">
+            <div class="metric-value">8.20</div>
+          </div>
+        </div>
+
+        <div class="sim-metric">
+          <div class="metric-label"><img src="../assets/6267a499-28d2-4255-857c-746abb06886c.svg" alt="" /><span>Redox</span></div>
+          <div class="metric-row">
+            <input type="range" id="redox-slider-modal" min="100" max="600" step="10" value="350" class="sim-slider"
+              data-type="redox">
+            <div class="metric-value">350 mV</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="tank-modal" id="tankModal"
+    onclick="if(event.target === this || event.target.classList.contains('tank-modal-close')) this.classList.remove('active')">
+    <button class="tank-modal-close" aria-label="Close tank view" type="button">
+      <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+        <path d="M7 7L17 17M17 7L7 17" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
+      </svg>
+    </button>
+    <img src="../assets/Inside tank view.webp" alt="Full screen tank view" onclick="event.stopPropagation()" />
+  </div>
+
+  <script>
+    const vitalHistoryTrigger = document.querySelector('.vitals-history');
+    const vitalHistoryModal = document.getElementById('vitalHistoryModal');
+    const vitalHistoryClose = document.querySelector('.vitals-history-close');
+
+    function setVitalHistoryOpen(open) {
+      if (!vitalHistoryModal) {
+        return;
+      }
+      vitalHistoryModal.setAttribute('aria-hidden', open ? 'false' : 'true');
+      document.body.style.overflow = open ? 'hidden' : '';
+    }
+
+
+    if (vitalHistoryTrigger && vitalHistoryClose && vitalHistoryModal) {
+      vitalHistoryTrigger.addEventListener('click', () => {
+        setVitalHistoryOpen(true);
+      });
+
+      vitalHistoryClose.addEventListener('click', () => {
+        setVitalHistoryOpen(false);
+      });
+
+      vitalHistoryModal.addEventListener('click', (event) => {
+        if (event.target === vitalHistoryModal) {
+          setVitalHistoryOpen(false);
+        }
+      });
+    }
+
+    (function initVitalHistoryCharts() {
+      const modal = document.getElementById('vitalHistoryModal');
+      if (!modal) {
+        return;
+      }
+
+      const chartInnerH = 164;
+      const barMinH = 8;
+
+      const rangeLabels = {
+        all: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+      };
+
+      function buildWeekLabels(count) {
+        const labels = [];
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const dowShort = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+        const n = Math.max(1, count);
+        for (let i = 0; i < n; i++) {
+          const d = new Date(today);
+          d.setDate(today.getDate() - (n - 1 - i));
+          const dayName = dowShort[d.getDay()];
+          const m = d.getMonth() + 1;
+          const day = d.getDate();
+          labels.push(dayName + ' ' + m + '/' + day);
+        }
+        return { labels: labels, todayIndex: n - 1 };
+      }
+
+      const metrics = {
+        temperature: {
+          min: 65,
+          max: 85,
+          formatAxis: function (n) {
+            return Math.round(n) + 'º';
+          },
+          formatBar: function (n) {
+            return n.toFixed(1) + 'º';
+          },
+          values: {
+            week: [76.2, 76.8, 77.1, 77.4, 78.0, 78.6, 79.0, 78.4, 77.8, 77.2, 76.7, 76.3],
+            all: [74.8, 75.2, 75.8, 76.4, 77.1, 78.0, 78.8, 79.2, 78.5, 77.6, 76.8, 76.1],
+          },
+        },
+        ph: {
+          min: 7.75,
+          max: 8.45,
+          formatAxis: function (n) {
+            return n.toFixed(2);
+          },
+          formatBar: function (n) {
+            return n.toFixed(2);
+          },
+          values: {
+            week: [8.12, 8.14, 8.11, 8.08, 8.06, 8.09, 8.13, 8.15, 8.12, 8.1, 8.08, 8.07],
+            all: [8.04, 8.06, 8.08, 8.1, 8.12, 8.14, 8.11, 8.09, 8.07, 8.06, 8.08, 8.1],
+          },
+        },
+        salinity: {
+          min: 32,
+          max: 38,
+          formatAxis: function (n) {
+            return n.toFixed(1) + ' ppt';
+          },
+          formatBar: function (n) {
+            return n.toFixed(1) + ' ppt';
+          },
+          values: {
+            week: [34.8, 35.0, 35.1, 34.9, 34.7, 34.8, 35.0, 35.2, 35.1, 34.9, 34.8, 34.9],
+            all: [34.2, 34.5, 34.8, 35.0, 35.2, 35.1, 34.9, 34.8, 34.9, 35.0, 35.1, 35.0],
+          },
+        },
+        redox: {
+          min: 200,
+          max: 420,
+          formatAxis: function (n) {
+            return Math.round(n) + ' mV';
+          },
+          formatBar: function (n) {
+            return Math.round(n) + ' mV';
+          },
+          values: {
+            week: [340, 355, 348, 332, 318, 325, 338, 352, 360, 348, 335, 328],
+            all: [280, 295, 310, 330, 350, 365, 358, 340, 318, 300, 290, 305],
+          },
+        },
+      };
+
+      function clamp(n, lo, hi) {
+        return Math.min(hi, Math.max(lo, n));
+      }
+
+      function valueToHeightPx(v, min, max) {
+        const t = clamp((v - min) / (max - min), 0, 1);
+        return barMinH + t * (chartInnerH - barMinH);
+      }
+
+      function axisLabels(min, max, count, formatAxis) {
+        const out = [];
+        for (let i = 0; i < count; i++) {
+          const t = i / (count - 1);
+          const v = max - t * (max - min);
+          out.push(formatAxis(v));
+        }
+        return out;
+      }
+
+      function renderChart(card) {
+        const selectEl = card.querySelector('.js-vh-metric-select');
+        const metricKey = selectEl && selectEl.value ? selectEl.value : card.getAttribute('data-vh-metric');
+        if (selectEl && metricKey) {
+          card.setAttribute('data-vh-metric', metricKey);
+        }
+        const spec = metrics[metricKey];
+        if (!spec) {
+          return;
+        }
+
+        const activeTab = card.querySelector('.vh-range span.active[data-vh-range]');
+        const range = activeTab ? activeTab.getAttribute('data-vh-range') : 'week';
+        const values = spec.values[range] || spec.values.week;
+        let labels;
+        let todayIdx = -1;
+        if (range === 'week') {
+          const w = buildWeekLabels(values.length);
+          labels = w.labels;
+          todayIdx = w.todayIndex;
+        } else {
+          labels = rangeLabels[range] || rangeLabels.all;
+        }
+
+        const axisEl = card.querySelector('.js-vh-axis');
+        const barsEl = card.querySelector('.js-vh-bars');
+        const xEl = card.querySelector('.js-vh-xlabels');
+        if (!axisEl || !barsEl || !xEl) {
+          return;
+        }
+
+        const ticks = axisLabels(spec.min, spec.max, 4, spec.formatAxis);
+        const spans = axisEl.querySelectorAll('span');
+        ticks.forEach((text, i) => {
+          if (spans[i]) {
+            spans[i].textContent = text;
+          }
+        });
+
+        barsEl.innerHTML = '';
+        values.forEach(function (v, i) {
+          const h = valueToHeightPx(v, spec.min, spec.max);
+          const bar = document.createElement('span');
+          bar.className = 'vh-bar';
+          if (range === 'week' && i === todayIdx) {
+            bar.classList.add('vh-bar--today');
+            bar.title = 'Today';
+          }
+          bar.style.height = h + 'px';
+          const lab = document.createElement('span');
+          lab.className = 'vh-bar-label';
+          lab.textContent = spec.formatBar(v);
+          bar.appendChild(lab);
+          barsEl.appendChild(bar);
+        });
+
+        xEl.innerHTML = '';
+        labels.forEach(function (text, i) {
+          const s = document.createElement('span');
+          s.textContent = text;
+          if (range === 'week' && i === todayIdx) {
+            s.classList.add('vh-x-label--today');
+            s.setAttribute('aria-current', 'date');
+          }
+          xEl.appendChild(s);
+        });
+      }
+
+      function wireChartCard(card) {
+        const selectEl = card.querySelector('.js-vh-metric-select');
+        if (selectEl) {
+          selectEl.addEventListener('change', function () {
+            renderChart(card);
+          });
+        }
+        const tabs = card.querySelectorAll('.vh-range span[data-vh-range]');
+        tabs.forEach(function (tab) {
+          tab.addEventListener('click', function () {
+            tabs.forEach(function (t) {
+              const on = t === tab;
+              t.classList.toggle('active', on);
+              t.setAttribute('aria-selected', on ? 'true' : 'false');
+            });
+            renderChart(card);
+          });
+        });
+        renderChart(card);
+      }
+
+      modal.querySelectorAll('.vh-chart-card').forEach(wireChartCard);
+    })();
+
+    document.addEventListener('keydown', (event) => {
+      if (event.key === 'Escape') {
+        setVitalHistoryOpen(false);
+      }
+    });
+
+    function coryMoodImageForScore(score) {
+      var s = Math.round(Number(score));
+      var n = 6;
+      if (s >= 90) {
+        n = 1;
+      } else if (s >= 75) {
+        n = 2;
+      } else if (s >= 60) {
+        n = 3;
+      } else if (s >= 40) {
+        n = 4;
+      } else if (s >= 20) {
+        n = 5;
+      }
+      return '../assets/Cory ' + n + '.svg';
+    }
+
+
+    const healthEl = document.querySelector('.pct');
+    const deltaArrowEl = document.querySelector('.delta-arrow');
+    const deltaValueEl = document.querySelector('.delta-value');
+    const tempTrendArrowEl = document.querySelector('.temp-trend .trend-arrow');
+    const tempTrendValueEl = document.querySelector('.temp-trend .trend-value');
+    const salTrendArrowEl = document.querySelector('.sal-trend .trend-arrow');
+    const salTrendValueEl = document.querySelector('.sal-trend .trend-value');
+    const vitalValueEls = document.querySelectorAll('.vital .vital-value');
+    const vitalBackCopyEls = document.querySelectorAll('.vital .vital-back-copy');
+    const tankStatusStrongEl = document.querySelector('.health-copy .tank-status strong');
+    const healthCoryEl = document.querySelector('.health-cory');
+    const statCopyEl = document.querySelector('.health-copy .stat-copy');
+
+    if (healthEl && deltaArrowEl && deltaValueEl && tempTrendArrowEl && tempTrendValueEl && salTrendArrowEl && salTrendValueEl && vitalValueEls.length >= 4) {
+      const metrics = {
+        health: 85,
+        temp: 77.9,
+        ph: 8.32,
+        salinity: 34,
+        redox: 372
+      };
+
+      const bounds = {
+        health: [70, 100],
+        temp: [72, 84],
+        ph: [7.8, 8.8],
+        salinity: [30, 40],
+        redox: [300, 450]
+      };
+
+      const stressBounds = {
+        health: [15, 50],
+        temp: [71.2, 76.8],
+        ph: [7.2, 7.72],
+        salinity: [28.2, 32.8],
+        redox: [175, 268]
+      };
+
+      const STRESS_STAT_COPY =
+        'The tank is in rough shape right now—readings are weak and the reef needs your attention. Focus on the health score and vitals before things slide further.';
+
+      var demoStressActive = false;
+      var metricsSnapshot = null;
+      var statCopySnapshot = null;
+      var tickTimerId = null;
+
+      function clamp(value, min, max) {
+        return Math.min(max, Math.max(min, value));
+      }
+
+      function hexToRgb(hex) {
+        var h = String(hex).replace('#', '');
+        return {
+          r: parseInt(h.slice(0, 2), 16),
+          g: parseInt(h.slice(2, 4), 16),
+          b: parseInt(h.slice(4, 6), 16)
+        };
+      }
+
+      function rgbToHex(r, g, b) {
+        function x(n) {
+          var s = Math.round(Math.max(0, Math.min(255, n))).toString(16);
+          return s.length === 1 ? '0' + s : s;
+        }
+        return '#' + x(r) + x(g) + x(b);
+      }
+
+      function lerpHex(hexA, hexB, t) {
+        var a = hexToRgb(hexA);
+        var b = hexToRgb(hexB);
+        var u = Math.max(0, Math.min(1, t));
+        return rgbToHex(a.r + (b.r - a.r) * u, a.g + (b.g - a.g) * u, a.b + (b.b - a.b) * u);
+      }
+
+      /** Same stops as #healthGaugeGradient — color at this health (0–100) matches the arc at the knob. */
+      function healthGaugeGradientColor(health) {
+        var t = clamp(Number(health) / 100, 0, 1);
+        var stops = [
+          { pos: 0, color: '#ff5c69' },
+          { pos: 0.35, color: '#ffb020' },
+          { pos: 0.65, color: '#c7dd19' },
+          { pos: 1, color: '#34c96b' }
+        ];
+        if (t <= stops[0].pos) {
+          return stops[0].color;
+        }
+        for (var i = 0; i < stops.length - 1; i++) {
+          if (t <= stops[i + 1].pos) {
+            var p0 = stops[i].pos;
+            var p1 = stops[i + 1].pos;
+            var localT = (t - p0) / (p1 - p0);
+            return lerpHex(stops[i].color, stops[i + 1].color, localT);
+          }
+        }
+        return stops[stops.length - 1].color;
+      }
+
+      function setHealthPercentColor(el, health) {
+        if (!el) {
+          return;
+        }
+        el.style.color = healthGaugeGradientColor(health);
+      }
+
+      function updateTankStatusStrongColor(health) {
+        if (!tankStatusStrongEl) {
+          return;
+        }
+        tankStatusStrongEl.style.color = healthGaugeGradientColor(health);
+      }
+
+      function updateArcCoryMascot(health) {
+        if (healthCoryEl) {
+          healthCoryEl.src = coryMoodImageForScore(health);
+        }
+      }
+
+      function clearTickTimer() {
+        if (tickTimerId != null) {
+          window.clearTimeout(tickTimerId);
+          tickTimerId = null;
+        }
+      }
+
+      function scheduleNextTick() {
+        clearTickTimer();
+        tickTimerId = window.setTimeout(tick, 6000 + (Math.random() * 1000));
+      }
+
+      function activeBounds() {
+        return demoStressActive ? stressBounds : bounds;
+      }
+
+      function seedStressMetrics() {
+        var b = stressBounds;
+        metrics.health = clamp(35, b.health[0], b.health[1]);
+        metrics.temp = b.temp[0] + Math.random() * (b.temp[1] - b.temp[0]);
+        metrics.ph = b.ph[0] + Math.random() * (b.ph[1] - b.ph[0]);
+        metrics.salinity = b.salinity[0] + Math.random() * (b.salinity[1] - b.salinity[0]);
+        metrics.redox = b.redox[0] + Math.random() * (b.redox[1] - b.redox[0]);
+      }
+
+      function broadcastTankToCory() {
+        var coryIframe = document.getElementById('cory-iframe');
+        if (coryIframe && coryIframe.contentWindow) {
+          var liveTankData = {
+            temperature: metrics.temp,
+            salinity: metrics.salinity,
+            ph: metrics.ph,
+            healthScore: metrics.health
+          };
+          coryIframe.contentWindow.postMessage({ type: 'UPDATE_TANK_DATA', data: liveTankData }, '*');
+        }
+      }
+
+      function applyTankStatusStressUI(on) {
+        if (!tankStatusStrongEl) {
+          return;
+        }
+        if (on) {
+          tankStatusStrongEl.textContent = 'Needs attention — review health score';
+        } else {
+          tankStatusStrongEl.textContent = 'Stable';
+        }
+      }
+
+      const RADIUS_X = 114;
+      const RADIUS_Y = 134;
+      const CX = 130;
+      const CY = 134;
+      const INDICATOR_OFFSET = 2.5;
+      const KNOB_SHIFT_X = 5;
+      const healthKnobGroup = document.getElementById('healthKnobGroup');
+
+      function updateHealthKnob(value) {
+        if (!healthKnobGroup) {
+          return;
+        }
+        const v = clamp(value, 0, 100);
+        const percentage = v / 100;
+        const angleRad = Math.PI - (percentage * Math.PI);
+        const x = CX + RADIUS_X * Math.cos(angleRad);
+        const y = CY - RADIUS_Y * Math.sin(angleRad);
+        const dx = -RADIUS_X * Math.sin(angleRad);
+        const dy = -RADIUS_Y * Math.cos(angleRad);
+        const rotation = (Math.atan2(dy, dx) * 180) / Math.PI;
+        const normalX = (x - CX) / (RADIUS_X * RADIUS_X);
+        const normalY = (y - CY) / (RADIUS_Y * RADIUS_Y);
+        const normalLength = Math.hypot(normalX, normalY) || 1;
+        const offsetX = (normalX / normalLength) * INDICATOR_OFFSET;
+        const offsetY = (normalY / normalLength) * INDICATOR_OFFSET;
+
+        healthKnobGroup.setAttribute(
+          'transform',
+          'translate(' + (x + offsetX + KNOB_SHIFT_X) + ', ' + (y + offsetY) + ') rotate(' + rotation + ')'
+        );
+      }
+
+      function jitterByPercent(value) {
+        const pct = (Math.random() * 4) - 2;
+        return {
+          value: value * (1 + (pct / 100)),
+          pct
+        };
+      }
+
+      function arrowFor(changePct) {
+        if (changePct > 0.05) {
+          return '↑';
+        }
+        if (changePct < -0.05) {
+          return '↓';
+        }
+        return '→';
+      }
+
+      function render(deltas) {
+        healthEl.textContent = `${Math.round(metrics.health)}%`;
+        setHealthPercentColor(healthEl, metrics.health);
+        updateTankStatusStrongColor(metrics.health);
+        updateArcCoryMascot(metrics.health);
+        updateHealthKnob(metrics.health);
+        deltaArrowEl.textContent = arrowFor(deltas.health);
+        deltaValueEl.textContent = `${Math.abs(deltas.health).toFixed(1)}%`;
+
+        tempTrendArrowEl.textContent = arrowFor(deltas.temp);
+        tempTrendValueEl.textContent = `${Math.abs(deltas.temp).toFixed(1)}°`;
+
+        salTrendArrowEl.textContent = arrowFor(deltas.salinity);
+        salTrendValueEl.textContent = `${Math.abs(deltas.salinity).toFixed(1)} ppt`;
+
+        vitalValueEls[0].textContent = `${metrics.temp.toFixed(1)}°F`;
+        vitalValueEls[1].textContent = metrics.ph.toFixed(2);
+        vitalValueEls[2].textContent = `${Math.round(metrics.salinity)} ppt`;
+        vitalValueEls[3].textContent = `${Math.round(metrics.redox)} mV`;
+
+        updateVitalBackCopies();
+      }
+
+      function updateVitalBackCopies() {
+        if (vitalBackCopyEls.length < 4) {
+          return;
+        }
+        if (demoStressActive) {
+          vitalBackCopyEls[0].textContent =
+            `At ${metrics.temp.toFixed(1)}°F, the tank is running cool. Corals need steady warmth—check heating and the room around the tank.`;
+          vitalBackCopyEls[1].textContent =
+            `pH ${metrics.ph.toFixed(2)} is low for a reef tank. That can stress corals—check alkalinity and correct slowly.`;
+          vitalBackCopyEls[2].textContent =
+            `Salinity is ${Math.round(metrics.salinity)} ppt—below where most reefs thrive. Adjust gradually and keep retesting.`;
+          vitalBackCopyEls[3].textContent =
+            `Redox near ${Math.round(metrics.redox)} mV suggests weak oxidative conditions. Review filtration, flow, and organic load.`;
+        } else {
+          vitalBackCopyEls[0].textContent =
+            `Your tank is at ${metrics.temp.toFixed(1)}°F—within a comfortable range when it stays steady.`;
+          vitalBackCopyEls[1].textContent =
+            `pH at ${metrics.ph.toFixed(2)} supports healthy coral. Keep testing so small drift does not become a problem.`;
+          vitalBackCopyEls[2].textContent =
+            `Your salinity is currently ${Math.round(metrics.salinity)} ppt. Stability is key for a thriving reef, and you're nailing it!`;
+          vitalBackCopyEls[3].textContent =
+            `Redox is looking great at ${Math.round(metrics.redox)} mV. High oxygen levels mean your corals are breathing easy!`;
+        }
+      }
+
+      function tick() {
+        var b = activeBounds();
+        const healthUpdate = jitterByPercent(metrics.health);
+        metrics.health = clamp(healthUpdate.value, b.health[0], b.health[1]);
+
+        const tempUpdate = jitterByPercent(metrics.temp);
+        metrics.temp = clamp(tempUpdate.value, b.temp[0], b.temp[1]);
+        metrics.ph = clamp(jitterByPercent(metrics.ph).value, b.ph[0], b.ph[1]);
+        const salinityUpdate = jitterByPercent(metrics.salinity);
+        metrics.salinity = clamp(salinityUpdate.value, b.salinity[0], b.salinity[1]);
+        metrics.redox = clamp(jitterByPercent(metrics.redox).value, b.redox[0], b.redox[1]);
+
+        render({
+          health: healthUpdate.pct,
+          temp: tempUpdate.pct,
+          salinity: salinityUpdate.pct
+        });
+        broadcastTankToCory();
+        scheduleNextTick();
+      }
+
+      function toggleDemoStress() {
+        if (demoStressActive) {
+          demoStressActive = false;
+          Object.assign(metrics, metricsSnapshot);
+          metricsSnapshot = null;
+          if (statCopyEl && statCopySnapshot != null) {
+            statCopyEl.textContent = statCopySnapshot;
+            statCopySnapshot = null;
+          }
+          applyTankStatusStressUI(false);
+          render({
+            health: 0,
+            temp: 0,
+            salinity: 0
+          });
+          broadcastTankToCory();
+          scheduleNextTick();
+        } else {
+          demoStressActive = true;
+          metricsSnapshot = {
+            health: metrics.health,
+            temp: metrics.temp,
+            ph: metrics.ph,
+            salinity: metrics.salinity,
+            redox: metrics.redox
+          };
+          if (statCopyEl) {
+            statCopySnapshot = statCopyEl.textContent;
+            statCopyEl.textContent = STRESS_STAT_COPY;
+          }
+          seedStressMetrics();
+          applyTankStatusStressUI(true);
+          render({
+            health: -8,
+            temp: -6,
+            salinity: -10
+          });
+          broadcastTankToCory();
+          scheduleNextTick();
+        }
+      }
+
+      function isTypingTarget(el) {
+        if (!el || !el.tagName) {
+          return false;
+        }
+        var t = el.tagName.toLowerCase();
+        if (t === 'input' || t === 'textarea' || t === 'select') {
+          return true;
+        }
+        return el.isContentEditable;
+      }
+
+      document.addEventListener('keydown', function demoStressKeydown(e) {
+        if (!e.ctrlKey || !e.shiftKey || (e.key !== 'v' && e.key !== 'V')) {
+          return;
+        }
+        if (isTypingTarget(e.target)) {
+          return;
+        }
+        e.preventDefault();
+        toggleDemoStress();
+      });
+
+      var demoStressHitbox = document.querySelector('.demo-stress-hitbox');
+      if (demoStressHitbox) {
+        demoStressHitbox.addEventListener('click', toggleDemoStress);
+      }
+
+      render({
+        health: 0,
+        temp: 0,
+        salinity: 0
+      });
+      scheduleNextTick();
+    }
+
+
+    // Also handle Escape key globally
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') {
+        const tm = document.getElementById('tankModal');
+        if (tm) tm.classList.remove('active');
+        const sm = document.getElementById('simModal');
+        if (sm) sm.classList.remove('active');
+      }
+    });
+
+    // Handle sim modal open/close
+    const simModalEl = document.getElementById('simModal');
+    const simEnlargeBtn = document.getElementById('btn-enlarge-sim');
+    const simModalCloseBtn = document.querySelector('.sim-modal-close');
+
+    if (simEnlargeBtn && simModalEl) {
+      simEnlargeBtn.addEventListener('click', () => simModalEl.classList.add('active'));
+    }
+
+    if (simModalCloseBtn && simModalEl) {
+      simModalCloseBtn.addEventListener('click', () => simModalEl.classList.remove('active'));
+    }
+
+    if (simModalEl) {
+      simModalEl.addEventListener('click', (e) => {
+        if (e.target === simModalEl) simModalEl.classList.remove('active');
+      });
+    }
+
+    // Make simulation sliders interactive
+    const sliders = document.querySelectorAll('.sim-slider');
+
+    function calculateAIHealthScore() {
+      const tempSlider = document.getElementById('temp-slider');
+      const salinitySlider = document.getElementById('salinity-slider');
+      const phSlider = document.getElementById('ph-slider');
+      const redoxSlider = document.getElementById('redox-slider');
+
+      if (!tempSlider || !salinitySlider || !phSlider || !redoxSlider) {
+        return { totalScore: 94, temp: 78, salinity: 35, ph: 8.2, redox: 350 };
+      }
+
+      const temp = parseFloat(tempSlider.value);
+      const salinity = parseFloat(salinitySlider.value);
+      const ph = parseFloat(phSlider.value);
+      const redox = parseFloat(redoxSlider.value);
+
+      let tempScore = 25;
+      if (temp < 76) tempScore -= (76 - temp) * 1.6; // Hits 0 at 60
+      else if (temp > 82) tempScore -= (temp - 82) * 1.4; // Hits 0 at 100
+      tempScore = Math.max(0, tempScore);
+
+      let phScore = 25;
+      if (ph < 7.9) phScore -= (7.9 - ph) * 28; // Hits 0 at 7.0
+      else if (ph > 8.4) phScore -= (ph - 8.4) * 42; // Hits 0 at 9.0
+      phScore = Math.max(0, phScore);
+
+      let salinityScore = 25;
+      if (salinity < 33) salinityScore -= (33 - salinity) * 2; // Hits 0 at 20
+      else if (salinity > 36) salinityScore -= (salinity - 36) * 1.8; // Hits 0 at 50
+      salinityScore = Math.max(0, salinityScore);
+
+      let redoxScore = 25;
+      if (redox < 250) redoxScore -= (250 - redox) * 0.17; // Hits 0 at 100
+      else if (redox > 450) redoxScore -= (redox - 450) * 0.17; // Hits 0 at 600
+      redoxScore = Math.max(0, redoxScore);
+
+      const totalScore = Math.round(tempScore + phScore + salinityScore + redoxScore);
+
+      // Update UI displays
+      const healthScoreDisplays = [document.getElementById('health-score-display'), document.getElementById('health-score-display-modal')];
+
+      let scoreColor = '#dc2626'; // Red (Bad)
+      if (totalScore >= 90) scoreColor = '#2ecc71'; // Matching dashboard Green (Good)
+      else if (totalScore >= 75) scoreColor = '#84cc16'; // Green-Yellow (OK)
+      else if (totalScore >= 60) scoreColor = '#facc15'; // Yellow (Medium)
+      else if (totalScore >= 40) scoreColor = '#f97316'; // Orange / Yellow-Red (Getting Bad)
+
+      healthScoreDisplays.forEach(el => {
+        if (el) {
+          el.textContent = totalScore + '%';
+          el.style.color = scoreColor;
+        }
+      });
+
+      let imgName = 'CorySimulation6.webp';
+      if (totalScore >= 90) imgName = 'CorySimulation1.webp';
+      else if (totalScore >= 75) imgName = 'CorySimulation2.webp';
+      else if (totalScore >= 60) imgName = 'CorySimulation3.webp';
+      else if (totalScore >= 40) imgName = 'CorySimulation4.webp';
+      else if (totalScore >= 20) imgName = 'CorySimulation5.webp';
+
+      const avatars = [document.getElementById('cory-avatar'), document.getElementById('cory-avatar-modal')];
+      avatars.forEach(el => {
+        if (el) el.src = '../assets/' + imgName;
+      });
+
+      return { totalScore, temp, salinity, ph, redox };
+    }
+
+    function syncSlidersAndBroadcast(e) {
+      const type = e.target.getAttribute('data-type');
+      const val = e.target.value;
+
+      document.querySelectorAll(`.sim-slider[data-type="${type}"]`).forEach(s => {
+        s.value = val;
+        let unit = '';
+        if (type === 'temperature') unit = '° F';
+        else if (type === 'salinity') unit = ' PPT';
+        else if (type === 'redox') unit = ' mV';
+        else if (type === 'ph') {
+          s.nextElementSibling.textContent = parseFloat(val).toFixed(2);
+          return;
+        }
+        s.nextElementSibling.textContent = val + unit;
+      });
+
+      const data = calculateAIHealthScore();
+
+      // Real-time broadcast
+      const coryIframe = document.getElementById('cory-iframe');
+      if (coryIframe && coryIframe.contentWindow) {
+        const liveTankData = {
+          temperature: data.temp,
+          salinity: data.salinity,
+          ph: data.ph,
+          healthScore: data.totalScore
+        };
+        coryIframe.contentWindow.postMessage({ type: 'UPDATE_TANK_DATA', data: liveTankData }, "*");
+      }
+    }
+
+    sliders.forEach(slider => {
+      slider.addEventListener('input', syncSlidersAndBroadcast);
+    });
+
+    function resetSimulationParameters() {
+      const defaults = [
+        ['temperature', '78', '° F'],
+        ['salinity', '35', ' PPT'],
+        ['ph', '8.2', null],
+        ['redox', '350', ' mV']
+      ];
+      defaults.forEach(function (row) {
+        var type = row[0];
+        var val = row[1];
+        var unit = row[2];
+        document.querySelectorAll('.sim-slider[data-type="' + type + '"]').forEach(function (s) {
+          s.value = val;
+          var next = s.nextElementSibling;
+          if (next) {
+            if (type === 'ph') {
+              next.textContent = parseFloat(val).toFixed(2);
+            } else {
+              next.textContent = val + unit;
+            }
+          }
+        });
+      });
+      var data = calculateAIHealthScore();
+      var coryIframe = document.getElementById('cory-iframe');
+      if (coryIframe && coryIframe.contentWindow) {
+        coryIframe.contentWindow.postMessage({
+          type: 'UPDATE_TANK_DATA',
+          data: {
+            temperature: data.temp,
+            salinity: data.salinity,
+            ph: data.ph,
+            healthScore: data.totalScore
+          }
+        }, '*');
+      }
+    }
+
+    var btnResetSmall = document.getElementById('btn-reset-small');
+    var btnResetLarge = document.getElementById('btn-reset-large');
+    if (btnResetSmall) {
+      btnResetSmall.addEventListener('click', resetSimulationParameters);
+    }
+    if (btnResetLarge) {
+      btnResetLarge.addEventListener('click', resetSimulationParameters);
+    }
+
+    // Run once to initialize
+    calculateAIHealthScore();
+  </script>
+  <div class="cory-dock">
+    <iframe id="cory-iframe" src="https://cory-ai-brain.vercel.app/" title="Cory assistant"></iframe>
+  </div>
+</body>
+
+</html>
