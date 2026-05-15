@@ -1720,7 +1720,7 @@
     .team-score {
       grid-column: 2;
       grid-row: 2;
-      min-height: 460px;
+      min-height: 0;
       height: auto;
       padding: 0;
       /* let the inner sim-card control padding so it fills the article */
@@ -1732,15 +1732,13 @@
     .sim-card {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      grid-template-rows: auto 1fr;
-      /* header then content; let content fill */
-      gap: 18px;
-      align-items: stretch;
-      padding: 25px;
+      grid-template-rows: auto auto;
+      gap: 8px 14px;
+      align-items: start;
+      padding: 14px 25px 18px;
       /* match `assignments` padding */
-      height: 100%;
-      min-height: 460px;
-      /* keep it taller to match request */
+      height: auto;
+      min-height: 0;
       background: transparent;
       /* remove inner white box so it fills the outer card */
       border-radius: 0;
@@ -1766,8 +1764,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      padding-bottom: 12px;
-      /* more breathing room under header */
+      padding-bottom: 6px;
       border-bottom: 1px solid rgba(0, 0, 0, 0.04);
       margin-top: 0;
     }
@@ -1805,7 +1802,7 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      margin-bottom: 4px;
+      margin-bottom: 0;
       flex-wrap: wrap;
       position: relative;
       z-index: 2;
@@ -1821,9 +1818,11 @@
       border-radius: 6px;
       overflow: hidden;
       display: flex;
-      align-items: center;
+      align-items: stretch;
       justify-content: center;
       grid-row: 2 / span 1;
+      align-self: stretch;
+      min-height: 0;
       position: relative;
       pointer-events: none;
       /* Neutralize overlap */
@@ -1840,13 +1839,21 @@
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
-      gap: 24px;
+      gap: 16px;
       padding-right: 6px;
     }
 
     .sim-metric {
       display: flex;
       flex-direction: column;
+    }
+
+    .team-score .sim-card .metric-row {
+      padding: 4px 0;
+    }
+
+    .team-score .sim-card .metric-label {
+      margin-bottom: 4px;
     }
 
     .metric-label {
@@ -1926,7 +1933,7 @@
       }
 
       .sim-header-row {
-        padding-bottom: 12px;
+        padding-bottom: 8px;
       }
     }
 
