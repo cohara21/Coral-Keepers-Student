@@ -788,6 +788,98 @@
       color: #34c96b;
     }
 
+    /* AI Health Score — info (i) control + popover */
+    .ai-health-info {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      flex-shrink: 0;
+    }
+
+    .ai-health-info-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 18px;
+      height: 18px;
+      padding: 0;
+      margin: 0;
+      border: 1.5px solid currentColor;
+      border-radius: 50%;
+      background: #fff;
+      color: var(--text-muted);
+      cursor: help;
+      font-size: 11px;
+      font-weight: 700;
+      font-style: normal;
+      line-height: 1;
+      flex-shrink: 0;
+      box-sizing: border-box;
+    }
+
+    .ai-health-info-btn:hover,
+    .ai-health-info-btn:focus-visible {
+      color: var(--blue);
+      border-color: var(--blue);
+      outline: none;
+    }
+
+    .ai-health-info.is-open .ai-health-info-btn,
+    .ai-health-info:hover .ai-health-info-btn,
+    .ai-health-info:focus-within .ai-health-info-btn {
+      color: var(--blue);
+      border-color: var(--blue);
+    }
+
+    .ai-health-info-popover {
+      position: absolute;
+      z-index: 30;
+      left: 50%;
+      transform: translateX(-50%);
+      width: min(288px, calc(100vw - 48px));
+      padding: 12px 14px;
+      border-radius: 8px;
+      background: #fff;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12), 0 2px 8px rgba(0, 0, 0, 0.06);
+      font-size: 12px;
+      line-height: 1.45;
+      font-weight: 500;
+      color: var(--text-dark);
+      text-align: left;
+      text-transform: none;
+      letter-spacing: normal;
+      pointer-events: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.15s ease, visibility 0.15s ease;
+    }
+
+    .ai-health-info.is-open .ai-health-info-popover,
+    .ai-health-info:hover .ai-health-info-popover,
+    .ai-health-info:focus-within .ai-health-info-popover {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    /* Default: card above icon */
+    .ai-health-info-popover {
+      bottom: calc(100% + 10px);
+      top: auto;
+    }
+
+    /* Simulation areas: show below so modal / cards don’t clip */
+    .sim-card .ai-health-info-popover,
+    .sim-modal .ai-health-info-popover {
+      bottom: auto;
+      top: calc(100% + 10px);
+    }
+
+    .sim-modal .ai-health-info-btn {
+      cursor: pointer;
+    }
+
     .core-vitals {
       margin: 16px 24px 24px;
     }
@@ -960,14 +1052,31 @@
     }
 
     .vh-title-metric {
+      position: relative;
       display: inline-block;
       vertical-align: middle;
       margin-left: 2px;
     }
 
+    /* Native <select> often drops custom backgrounds — draw caret on wrapper */
+    .vh-title-metric::after {
+      content: "";
+      position: absolute;
+      right: 2px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 11px;
+      height: 5px;
+      background: url("../assets/vital-history-b1eda2542cd4acc28315a4d4c41ebcb6e73d677b.svg") no-repeat center;
+      background-size: 11px 5px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
     .vh-metric-select {
       appearance: none;
       -webkit-appearance: none;
+      -moz-appearance: none;
       border: 0;
       background-color: transparent;
       font: inherit;
@@ -977,12 +1086,8 @@
       letter-spacing: 1.2px;
       font-weight: 700;
       cursor: pointer;
-      padding: 0 16px 0 0;
+      padding: 0 18px 0 0;
       margin: 0;
-      background-image: url("../assets/vital-history-b1eda2542cd4acc28315a4d4c41ebcb6e73d677b.svg");
-      background-repeat: no-repeat;
-      background-position: right 2px center;
-      background-size: 11px 5px;
       color: #ff6200;
       max-width: min(220px, 42vw);
       text-overflow: ellipsis;
@@ -1028,7 +1133,7 @@
       background: rgba(255, 165, 109, 0.24);
       min-height: 8px;
       position: relative;
-      transition: background-color 0.2s ease;
+      transition: background-color 0.12s ease;
       cursor: pointer;
     }
 
@@ -1065,7 +1170,7 @@
       white-space: nowrap;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.2s ease;
+      transition: opacity 0.12s ease;
     }
 
     .vh-bar:hover .vh-bar-label {
@@ -1797,8 +1902,22 @@
       gap: 10px;
     }
 
-    .sim-score-row {
+    .sim-score-label-row {
       display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
+    }
+
+    .sim-modal-score-label-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .sim-score-row {
       align-items: center;
       justify-content: space-between;
       gap: 12px;
@@ -2017,6 +2136,10 @@
     .health .health-copy .health-title {
       margin-top: 13px;
       margin-bottom: 0;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
     }
 
     .health .health-copy .stat-main {
@@ -2226,7 +2349,21 @@
           </div>
 
           <div class="health-copy">
-            <h3 class="health-title">AI Health Score</h3>
+            <h3 class="health-title">
+              AI Health Score
+              <span class="ai-health-info" data-ai-health-info>
+                <button type="button" class="ai-health-info-btn" id="ai-health-help-btn-tank"
+                  aria-label="How the AI Health Score is calculated" aria-expanded="false"
+                  aria-controls="ai-health-help-panel-tank">
+                  <span class="ai-health-info-icon" aria-hidden="true">i</span>
+                </button>
+                <span id="ai-health-help-panel-tank" class="ai-health-info-popover" role="tooltip">
+                  Our AI calculates this score from your tank’s live conditions—temperature, pH, salinity, redox, and
+                  more—together with your tank camera, including still images and timelapses. It combines these inputs and
+                  turns them into a single health score.
+                </span>
+              </span>
+            </h3>
             <div class="stat-main">
               <div class="pct">94%</div>
               <div class="delta">
@@ -2386,7 +2523,21 @@
             <div class="sim-score-row">
               <div class="sim-score-group">
                 <div class="sim-score" id="health-score-display">92%</div>
-                <div class="sim-score-label">AI Health Score</div>
+                <div class="sim-score-label-row">
+                  <span class="sim-score-label">AI Health Score</span>
+                  <span class="ai-health-info" data-ai-health-info>
+                    <button type="button" class="ai-health-info-btn" id="ai-health-help-btn-sim"
+                      aria-label="How the AI Health Score is calculated" aria-expanded="false"
+                      aria-controls="ai-health-help-panel-sim">
+                      <span class="ai-health-info-icon" aria-hidden="true">i</span>
+                    </button>
+                    <span id="ai-health-help-panel-sim" class="ai-health-info-popover" role="tooltip">
+                      Our AI calculates this score from your tank’s live conditions—temperature, pH, salinity, redox, and
+                      more—together with your tank camera, including still images and timelapses. It combines these inputs
+                      and turns them into a single health score.
+                    </span>
+                  </span>
+                </div>
               </div>
               <button type="button" id="btn-reset-small" class="sim-reset-fab" title="Reset to Ideal Parameters"
                 aria-label="Reset to ideal parameters">
@@ -2566,7 +2717,21 @@
       <div class="sim-modal-metrics">
         <div class="sim-modal-score-big">
           <div class="sim-score" id="health-score-display-modal">92%</div>
-          <div class="sim-score-label">AI Health Score</div>
+          <div class="sim-modal-score-label-row">
+            <span class="sim-score-label">AI Health Score</span>
+            <span class="ai-health-info" data-ai-health-info>
+              <button type="button" class="ai-health-info-btn" id="ai-health-help-btn-modal"
+                aria-label="How the AI Health Score is calculated" aria-expanded="false"
+                aria-controls="ai-health-help-panel-modal">
+                <span class="ai-health-info-icon" aria-hidden="true">i</span>
+              </button>
+              <span id="ai-health-help-panel-modal" class="ai-health-info-popover" role="tooltip">
+                Our AI calculates this score from your tank’s live conditions—temperature, pH, salinity, redox, and
+                more—together with your tank camera, including still images and timelapses. It combines these inputs and
+                turns them into a single health score.
+              </span>
+            </span>
+          </div>
           <button type="button" id="btn-reset-large" class="primary-btn">Reset Parameters</button>
         </div>
 
@@ -2624,6 +2789,73 @@
     const vitalHistoryModal = document.getElementById('vitalHistoryModal');
     const vitalHistoryClose = document.querySelector('.vitals-history-close');
 
+    function readTankReadoutsFromDom() {
+      const els = document.querySelectorAll('.core-vitals .vital-value');
+      if (els.length < 4) {
+        return null;
+      }
+      function num(el) {
+        const v = parseFloat(String(el.textContent).replace(/[^0-9.-]/g, ''));
+        return Number.isFinite(v) ? v : null;
+      }
+      const temp = num(els[0]);
+      const ph = num(els[1]);
+      const salinity = num(els[2]);
+      const redox = num(els[3]);
+      if (temp == null || ph == null || salinity == null || redox == null) {
+        return null;
+      }
+      return { temp, ph, salinity, redox };
+    }
+
+    (function initAiHealthInfoTips() {
+      document.querySelectorAll('[data-ai-health-info]').forEach(function (wrap) {
+        var btn = wrap.querySelector('.ai-health-info-btn');
+        if (!btn) {
+          return;
+        }
+        btn.addEventListener('click', function (e) {
+          e.stopPropagation();
+          var willOpen = !wrap.classList.contains('is-open');
+          document.querySelectorAll('[data-ai-health-info].is-open').forEach(function (w) {
+            if (w !== wrap) {
+              w.classList.remove('is-open');
+              var ob = w.querySelector('.ai-health-info-btn');
+              if (ob) {
+                ob.setAttribute('aria-expanded', 'false');
+              }
+            }
+          });
+          wrap.classList.toggle('is-open', willOpen);
+          btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+        });
+      });
+      document.addEventListener('click', function (e) {
+        if (e.target.closest('[data-ai-health-info]')) {
+          return;
+        }
+        document.querySelectorAll('[data-ai-health-info].is-open').forEach(function (w) {
+          w.classList.remove('is-open');
+          var b = w.querySelector('.ai-health-info-btn');
+          if (b) {
+            b.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key !== 'Escape') {
+          return;
+        }
+        document.querySelectorAll('[data-ai-health-info].is-open').forEach(function (w) {
+          w.classList.remove('is-open');
+          var b = w.querySelector('.ai-health-info-btn');
+          if (b) {
+            b.setAttribute('aria-expanded', 'false');
+          }
+        });
+      });
+    })();
+
     function setVitalHistoryOpen(open) {
       if (!vitalHistoryModal) {
         return;
@@ -2636,6 +2868,11 @@
     if (vitalHistoryTrigger && vitalHistoryClose && vitalHistoryModal) {
       vitalHistoryTrigger.addEventListener('click', () => {
         setVitalHistoryOpen(true);
+        const d = readTankReadoutsFromDom();
+        if (d) {
+          document.dispatchEvent(new CustomEvent('coral-tank-readouts', { detail: d }));
+        }
+        document.dispatchEvent(new Event('coral-reschedule-tank-tick'));
       });
 
       vitalHistoryClose.addEventListener('click', () => {
@@ -2846,6 +3083,39 @@
         renderChart(card);
       }
 
+      function applyLiveReadoutsToChart(readouts) {
+        if (!readouts) {
+          return;
+        }
+        const temp = Number(readouts.temp);
+        const ph = Number(readouts.ph);
+        const salinity = Number(readouts.salinity);
+        const redox = Number(readouts.redox);
+        if (![temp, ph, salinity, redox].every(Number.isFinite)) {
+          return;
+        }
+        const wlen = metrics.temperature.values.week.length;
+        const ti = buildWeekLabels(wlen).todayIndex;
+        const lastAll = metrics.temperature.values.all.length - 1;
+        metrics.temperature.values.week[ti] = temp;
+        metrics.temperature.values.all[lastAll] = temp;
+        metrics.ph.values.week[ti] = ph;
+        metrics.ph.values.all[lastAll] = ph;
+        metrics.salinity.values.week[ti] = salinity;
+        metrics.salinity.values.all[lastAll] = salinity;
+        metrics.redox.values.week[ti] = redox;
+        metrics.redox.values.all[lastAll] = redox;
+        if (modal.getAttribute('aria-hidden') === 'false') {
+          modal.querySelectorAll('.vh-chart-card').forEach(function (c) {
+            renderChart(c);
+          });
+        }
+      }
+
+      document.addEventListener('coral-tank-readouts', function (ev) {
+        applyLiveReadoutsToChart(ev.detail);
+      });
+
       modal.querySelectorAll('.vh-chart-card').forEach(wireChartCard);
     })();
 
@@ -2999,8 +3269,15 @@
 
       function scheduleNextTick() {
         clearTickTimer();
-        tickTimerId = window.setTimeout(tick, 6000 + (Math.random() * 1000));
+        var histEl = document.getElementById('vitalHistoryModal');
+        var modalOpen = histEl && histEl.getAttribute('aria-hidden') === 'false';
+        var delay = modalOpen ? 1200 : (6000 + (Math.random() * 1000));
+        tickTimerId = window.setTimeout(tick, delay);
       }
+
+      document.addEventListener('coral-reschedule-tank-tick', function () {
+        scheduleNextTick();
+      });
 
       function activeBounds() {
         return demoStressActive ? stressBounds : bounds;
@@ -3137,6 +3414,19 @@
         }
       }
 
+      function emitTankReadoutsForCharts() {
+        document.dispatchEvent(
+          new CustomEvent('coral-tank-readouts', {
+            detail: {
+              temp: metrics.temp,
+              ph: metrics.ph,
+              salinity: metrics.salinity,
+              redox: metrics.redox
+            }
+          })
+        );
+      }
+
       function tick() {
         var b = activeBounds();
         const healthUpdate = jitterByPercent(metrics.health);
@@ -3155,6 +3445,7 @@
           salinity: salinityUpdate.pct
         });
         broadcastTankToCory();
+        emitTankReadoutsForCharts();
         scheduleNextTick();
       }
 
@@ -3174,6 +3465,7 @@
             salinity: 0
           });
           broadcastTankToCory();
+          emitTankReadoutsForCharts();
           scheduleNextTick();
         } else {
           demoStressActive = true;
@@ -3196,6 +3488,7 @@
             salinity: -10
           });
           broadcastTankToCory();
+          emitTankReadoutsForCharts();
           scheduleNextTick();
         }
       }
@@ -3232,6 +3525,7 @@
         temp: 0,
         salinity: 0
       });
+      emitTankReadoutsForCharts();
       scheduleNextTick();
     }
 
