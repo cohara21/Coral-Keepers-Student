@@ -869,17 +869,6 @@
       top: auto;
     }
 
-    /* Simulation areas: show below so modal / cards don’t clip */
-    .sim-card .ai-health-info-popover,
-    .sim-modal .ai-health-info-popover {
-      bottom: auto;
-      top: calc(100% + 10px);
-    }
-
-    .sim-modal .ai-health-info-btn {
-      cursor: pointer;
-    }
-
     .core-vitals {
       margin: 16px 24px 24px;
     }
@@ -1902,22 +1891,8 @@
       gap: 10px;
     }
 
-    .sim-score-label-row {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      flex-wrap: wrap;
-    }
-
-    .sim-modal-score-label-row {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      flex-wrap: wrap;
-    }
-
     .sim-score-row {
+      display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
@@ -2523,21 +2498,7 @@
             <div class="sim-score-row">
               <div class="sim-score-group">
                 <div class="sim-score" id="health-score-display">92%</div>
-                <div class="sim-score-label-row">
-                  <span class="sim-score-label">AI Health Score</span>
-                  <span class="ai-health-info" data-ai-health-info>
-                    <button type="button" class="ai-health-info-btn" id="ai-health-help-btn-sim"
-                      aria-label="How the AI Health Score is calculated" aria-expanded="false"
-                      aria-controls="ai-health-help-panel-sim">
-                      <span class="ai-health-info-icon" aria-hidden="true">i</span>
-                    </button>
-                    <span id="ai-health-help-panel-sim" class="ai-health-info-popover" role="tooltip">
-                      Our AI calculates this score from your tank’s live conditions—temperature, pH, salinity, redox, and
-                      more—together with your tank camera, including still images and timelapses. It combines these inputs
-                      and turns them into a single health score.
-                    </span>
-                  </span>
-                </div>
+                <div class="sim-score-label">AI Health Score</div>
               </div>
               <button type="button" id="btn-reset-small" class="sim-reset-fab" title="Reset to Ideal Parameters"
                 aria-label="Reset to ideal parameters">
@@ -2717,21 +2678,7 @@
       <div class="sim-modal-metrics">
         <div class="sim-modal-score-big">
           <div class="sim-score" id="health-score-display-modal">92%</div>
-          <div class="sim-modal-score-label-row">
-            <span class="sim-score-label">AI Health Score</span>
-            <span class="ai-health-info" data-ai-health-info>
-              <button type="button" class="ai-health-info-btn" id="ai-health-help-btn-modal"
-                aria-label="How the AI Health Score is calculated" aria-expanded="false"
-                aria-controls="ai-health-help-panel-modal">
-                <span class="ai-health-info-icon" aria-hidden="true">i</span>
-              </button>
-              <span id="ai-health-help-panel-modal" class="ai-health-info-popover" role="tooltip">
-                Our AI calculates this score from your tank’s live conditions—temperature, pH, salinity, redox, and
-                more—together with your tank camera, including still images and timelapses. It combines these inputs and
-                turns them into a single health score.
-              </span>
-            </span>
-          </div>
+          <div class="sim-score-label">AI Health Score</div>
           <button type="button" id="btn-reset-large" class="primary-btn">Reset Parameters</button>
         </div>
 
