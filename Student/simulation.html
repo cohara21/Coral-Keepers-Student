@@ -1,0 +1,593 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Coral Keepers - Simulation</title>
+  <meta name="description" content="The Coral Keepers coral simulation. Move temperature, salinity, pH and redox and watch the health score and the coral respond." />
+  <!-- Unlisted. This page exists to be embedded in carsonohara.com; it is not
+       linked from the Coral Keepers platform and should not be indexed. -->
+  <meta name="robots" content="noindex, nofollow" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap" rel="stylesheet" />
+  <style>
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:#f7f9fa;font-family:"Inter",sans-serif;color:#0f172a}
+    .sim-standalone{padding:20px;max-width:1060px;margin:0 auto}
+    .sim-standalone .sim-card{display:grid;grid-template-columns:1.1fr 0.9fr;gap:24px;align-items:start;
+      background:#fff;border-radius:14px;padding:22px;
+      box-shadow:0 6px 24px rgba(15,23,42,0.06);border:1px solid rgba(15,23,42,0.05)}
+    /* The app pins .sim-left to grid row 2 because the dashboard had a header
+       row above it. This page has no header row, so place both explicitly. */
+    .sim-standalone .sim-left{grid-column:1;grid-row:1}
+    .sim-standalone .sim-right{grid-column:2;grid-row:1}
+    .sim-standalone .sim-left img{width:100%;height:auto;display:block;border-radius:10px}
+    @media (max-width:760px){
+      .sim-standalone .sim-card{grid-template-columns:1fr;gap:18px}
+      .sim-standalone .sim-left,.sim-standalone .sim-right{grid-column:1;grid-row:auto}
+      .sim-standalone{padding:12px}
+    }
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      backdrop-filter: blur(8px);
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+      padding: 40px 20px;}
+      width: 100%;
+      max-width: 1400px;
+      height: 85vh;
+      max-height: 85vh;
+      background: #fff;
+      border-radius: 12px;
+      display: grid;
+      grid-template-columns: 1.3fr 0.7fr;
+      grid-template-rows: auto 1fr;
+      gap: 24px;
+      padding: 32px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+      cursor: default;
+      overflow: hidden;}
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);}
+      text-transform: uppercase;
+      letter-spacing: 1.6px;
+      font-weight: 700;
+      color: #5b605f;}
+      font-weight: 700;
+      font-size: 18px;}
+      align-items: center;
+      gap: 10px;}
+      grid-row: 2;
+      background: #111;
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      /* Neutralize overlap */}
+      height: 100%;
+      object-fit: cover;
+      display: block;}
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding-left: 0;
+      justify-content: flex-start;
+      width: 100%;}
+/* ── Global Row Layout (dashboard + modal) ── */
+    .metric-row{display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 12px 0;
+      overflow: visible;
+      /* Prevents edge clipping on small views */}
+/* The Base Input - Let the browser size it naturally */
+    .sim-slider{-webkit-appearance: none;
+      /* Crucial Reset */
+      appearance: none;
+      flex: 1;
+      width: 100%;
+      background: transparent;
+      /* Crucial: Hides native track */
+      margin: 0;
+      cursor: pointer;}
+.sim-slider:focus{outline: none;}
+/* The Custom Track */
+    .sim-slider::-webkit-slider-runnable-track{width: 100%;
+      height: 8px;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 4px;}
+/* The Custom Thumb */
+    .sim-slider::-webkit-slider-thumb{-webkit-appearance: none;
+      /* Crucial Reset */
+      appearance: none;
+      height: 24px;
+      width: 24px;
+      border-radius: 50%;
+      background: #0075de;
+      cursor: pointer;
+      /* Formula: (Track Height / 2) - (Thumb Height / 2) */
+      margin-top: -8px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);}
+/* Firefox Support */
+    .sim-slider::-moz-range-track{width: 100%;
+      height: 8px;
+      cursor: pointer;
+      background: rgba(0, 0, 0, 0.1);
+      border-radius: 4px;}
+.sim-slider::-moz-range-thumb{height: 24px;
+      width: 24px;
+      border-radius: 50%;
+      background: #0075de;
+      cursor: pointer;
+      border: none;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);}
+      font-weight: 700;
+      color: #0075de;
+      flex: 0 0 85px;
+      text-align: left;
+      pointer-events: none;
+      user-select: none;
+      margin-left: 16px;}
+      flex-direction: column;
+      justify-content: center;
+      align-items: stretch;
+      width: 100%;}
+      padding-left: 0;
+      box-sizing: border-box;}
+      grid-row: 2;
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-template-rows: auto repeat(4, auto);
+      gap: 20px;
+      padding-right: 16px;
+      padding-left: 0;
+      align-content: start;
+      justify-items: stretch;}
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding-bottom: 40px;
+      margin-bottom: 32px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+      text-align: center;}
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      font-weight: 700;
+      color: #5b605f;}
+      font-weight: 900;
+      color: #16a34a;
+      line-height: 1;
+      letter-spacing: -4px;}
+      border-radius: 4px;}
+      border-radius: 4px;}
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 0;
+      transition: color 0.15s ease, opacity 0.15s ease;
+      padding: 10px;
+      margin: 0;
+      line-height: 1;
+      flex-shrink: 0;
+      background: transparent;
+      border: none;
+      color: #2f3333;}
+      top: 10px;
+      right: 10px;
+      z-index: 20;}
+    .sim-modal-content > .sim-modal-close:focus-visible{color: #000;
+      opacity: 0.85;
+      outline: none;}
+      height: 26px;
+      display: block;}
+.primary-btn{margin-top: 24px;
+      height: 44px;
+      border-radius: 4px;
+      border: none;
+      background: var(--blue);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
+      color: #f6f7ff;
+      font-size: 12px;
+      line-height: 16px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, filter 0.18s ease;}
+.primary-btn:hover,
+    .primary-btn:focus-visible{transform: translateY(-2px);
+      box-shadow: 0 10px 20px -10px rgba(0, 0, 0, 0.35);
+      filter: brightness(1.05);}
+.primary-btn:active{transform: translateY(0);}
+/* Coral Simulation — match View All Coursework primary; small reset = live tank enlarge */
+    .sim-header-row .primary-btn{margin-top: 0;
+      flex-shrink: 0;
+      padding-left: 18px;
+      padding-right: 18px;}
+.sim-reset-fab{flex: none;
+      width: 36px;
+      height: 36px;
+      min-width: 36px;
+      min-height: 36px;
+      background: #fff;
+      border-radius: 50%;
+      border: none;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      transition: transform 0.2s;
+      pointer-events: auto;
+      position: relative;
+      z-index: 2;}
+.sim-reset-fab:hover,
+    .sim-reset-fab:focus-visible{transform: scale(1.1);
+      outline: none;}
+.sim-reset-fab img{width: 16px;
+      height: 16px;
+      display: block;
+      object-fit: contain;
+      pointer-events: none;}
+/* Simulation card placed in the Team Score slot for Student view */
+    .sim-card{display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto auto;
+      gap: 8px 14px;
+      align-items: start;
+      padding: 14px 25px 18px;
+      /* match `assignments` padding */
+      height: auto;
+      min-height: 0;
+      background: transparent;
+      /* remove inner white box so it fills the outer card */
+      border-radius: 0;
+      box-shadow: none;
+      border: none;
+      align-content: start;
+      /* ensure header sits at the top */
+      position: relative;
+      /* Cory can sit above simulation text; only actual controls opt back into pointer events. */
+      pointer-events: none;}
+.team-score .sim-card input,
+    .team-score .sim-card button{position: relative;
+      z-index: 999;
+      pointer-events: auto;}
+.sim-header-row{grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.04);
+      margin-top: 0;}
+.sim-title{font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+      color: #5b605f;}
+.sim-score-label{font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      font-weight: 700;
+      color: #5b605f;}
+.sim-score{color: #16a34a;
+      font-weight: 700;
+      font-size: 14px;}
+.sim-score-group{display: flex;
+      align-items: center;
+      gap: 10px;}
+.sim-score-row{display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 0;
+      flex-wrap: wrap;
+      position: relative;
+      z-index: 2;}
+.sim-score-row .sim-score-group{flex: 1 1 auto;
+      min-width: 0;}
+.sim-left{background: #111;
+      border-radius: 6px;
+      overflow: hidden;
+      display: flex;
+      align-items: stretch;
+      justify-content: center;
+      grid-row: 2 / span 1;
+      align-self: stretch;
+      min-height: 0;
+      position: relative;
+      pointer-events: none;
+      /* Neutralize overlap */}
+.sim-left>img{width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;}
+.sim-right{display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      gap: 16px;
+      padding-right: 6px;}
+.sim-metric{display: flex;
+      flex-direction: column;}
+.team-score .sim-card .metric-row{padding: 4px 0;}
+.team-score .sim-card .metric-label{margin-bottom: 4px;}
+.metric-label{color: #2f3333;
+      font-weight: 700;
+      font-size: 13px;
+      margin-bottom: 8px;
+      line-height: 1.4;
+      display: flex;
+      align-items: center;
+      gap: 8px;}
+.metric-label img{flex: none;
+      object-fit: contain;}
+.metric-label img[src*="7bd8d3c0"]{width: 8px;
+      height: 15px;}
+.metric-label img[src*="3c41eed2"]{width: 14px;
+      height: 14px;}
+.metric-label img[src*="4dea0953"]{width: 12px;
+      height: 15px;}
+.metric-label img[src*="6267a499"]{width: 12px;
+      height: 15px;}
+/* .metric-row and .sim-slider styles are defined globally above */
+    .metric-value{color: #0075de;
+      font-weight: 700;
+      flex: 0 0 64px;
+      text-align: left;
+      pointer-events: none;
+      user-select: none;
+      margin-left: 20px;
+      /* Spacing via margin */}
+.metric-track{position: relative;
+      flex: 1 1 auto;
+      height: 8px;
+      background: #eef2f3;
+      border-radius: 999px;
+      margin: 0 12px 0 0;
+      cursor: pointer;}
+.metric-thumb{position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 14px;
+      height: 14px;
+      background: #16a34a;
+      border-radius: 50%;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.12);
+      transition: left 0.1s ease-out;}
+.sim-card{grid-template-columns: 1fr;}
+.sim-header-row{padding-bottom: 8px;}
+  </style>
+</head>
+<body>
+  <div class="sim-standalone">
+<div class="sim-card" role="region" aria-label="Coral Simulation">
+
+          <div class="sim-left">
+            <img src="../assets/Inside tank view.webp" alt="Simulation preview" id="cory-avatar" />
+          </div>
+
+          <div class="sim-right">
+            <div class="sim-score-row">
+              <div class="sim-score-group">
+                <div class="sim-score" id="health-score-display">92%</div>
+                <div class="sim-score-label">AI Health Score</div>
+              </div>
+              <button type="button" id="btn-reset-small" class="sim-reset-fab" title="Reset to Ideal Parameters"
+                aria-label="Reset to ideal parameters">
+                <img src="../assets/refresh.svg" alt="">
+              </button>
+            </div>
+            <div class="sim-metric">
+              <div class="metric-label"><span>Temperature</span><img
+                  src="../assets/7bd8d3c0-7663-4246-86b1-265d54c9882a.svg" alt="" /></div>
+              <div class="metric-row">
+                <input type="range" id="temp-slider" min="60" max="100" step="1" value="78" class="sim-slider"
+                  data-type="temperature">
+                <div class="metric-value">78° F</div>
+              </div>
+            </div>
+
+            <div class="sim-metric">
+              <div class="metric-label"><span>Salinity</span><img
+                  src="../assets/4dea0953-907d-4052-ab20-9cca83cda85c.svg" alt="" /></div>
+              <div class="metric-row">
+                <input type="range" id="salinity-slider" min="20" max="50" step="1" value="35" class="sim-slider"
+                  data-type="salinity">
+                <div class="metric-value">35 PPT</div>
+              </div>
+            </div>
+
+            <div class="sim-metric">
+              <div class="metric-label"><span>pH Level</span><img
+                  src="../assets/3c41eed2-862f-4820-83ce-73a8f4e7e1d3.svg" alt="" /></div>
+              <div class="metric-row">
+                <input type="range" id="ph-slider" min="7.0" max="9.0" step="0.1" value="8.2" class="sim-slider"
+                  data-type="ph">
+                <div class="metric-value">8.20</div>
+              </div>
+            </div>
+
+            <div class="sim-metric">
+              <div class="metric-label"><span>Redox</span><img src="../assets/6267a499-28d2-4255-857c-746abb06886c.svg"
+                  alt="" /></div>
+              <div class="metric-row">
+                <input type="range" id="redox-slider" min="100" max="600" step="10" value="350" class="sim-slider"
+                  data-type="redox">
+                <div class="metric-value">350 mV</div>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+  <script>
+    (function () {
+// Make simulation sliders interactive
+    const sliders = document.querySelectorAll('.sim-slider');
+
+    function calculateAIHealthScore() {
+      const tempSlider = document.getElementById('temp-slider');
+      const salinitySlider = document.getElementById('salinity-slider');
+      const phSlider = document.getElementById('ph-slider');
+      const redoxSlider = document.getElementById('redox-slider');
+
+      if (!tempSlider || !salinitySlider || !phSlider || !redoxSlider) {
+        return { totalScore: 94, temp: 78, salinity: 35, ph: 8.2, redox: 350 };
+      }
+
+      const temp = parseFloat(tempSlider.value);
+      const salinity = parseFloat(salinitySlider.value);
+      const ph = parseFloat(phSlider.value);
+      const redox = parseFloat(redoxSlider.value);
+
+      let tempScore = 25;
+      if (temp < 76) tempScore -= (76 - temp) * 1.6; // Hits 0 at 60
+      else if (temp > 82) tempScore -= (temp - 82) * 1.4; // Hits 0 at 100
+      tempScore = Math.max(0, tempScore);
+
+      let phScore = 25;
+      if (ph < 7.9) phScore -= (7.9 - ph) * 28; // Hits 0 at 7.0
+      else if (ph > 8.4) phScore -= (ph - 8.4) * 42; // Hits 0 at 9.0
+      phScore = Math.max(0, phScore);
+
+      let salinityScore = 25;
+      if (salinity < 33) salinityScore -= (33 - salinity) * 2; // Hits 0 at 20
+      else if (salinity > 36) salinityScore -= (salinity - 36) * 1.8; // Hits 0 at 50
+      salinityScore = Math.max(0, salinityScore);
+
+      let redoxScore = 25;
+      if (redox < 250) redoxScore -= (250 - redox) * 0.17; // Hits 0 at 100
+      else if (redox > 450) redoxScore -= (redox - 450) * 0.17; // Hits 0 at 600
+      redoxScore = Math.max(0, redoxScore);
+
+      const totalScore = Math.round(tempScore + phScore + salinityScore + redoxScore);
+
+      // Update UI displays
+      const healthScoreDisplays = [document.getElementById('health-score-display'), document.getElementById('health-score-display-modal')];
+
+      let scoreColor = '#dc2626'; // Red (Bad)
+      if (totalScore >= 90) scoreColor = '#2ecc71'; // Matching dashboard Green (Good)
+      else if (totalScore >= 75) scoreColor = '#84cc16'; // Green-Yellow (OK)
+      else if (totalScore >= 60) scoreColor = '#facc15'; // Yellow (Medium)
+      else if (totalScore >= 40) scoreColor = '#f97316'; // Orange / Yellow-Red (Getting Bad)
+
+      healthScoreDisplays.forEach(el => {
+        if (el) {
+          el.textContent = totalScore + '%';
+          el.style.color = scoreColor;
+        }
+      });
+
+      let imgName = 'CorySimulation6.webp';
+      if (totalScore >= 90) imgName = 'CorySimulation1.webp';
+      else if (totalScore >= 75) imgName = 'CorySimulation2.webp';
+      else if (totalScore >= 60) imgName = 'CorySimulation3.webp';
+      else if (totalScore >= 40) imgName = 'CorySimulation4.webp';
+      else if (totalScore >= 20) imgName = 'CorySimulation5.webp';
+
+      const avatars = [document.getElementById('cory-avatar'), document.getElementById('cory-avatar-modal')];
+      avatars.forEach(el => {
+        if (el) el.src = '../assets/' + imgName;
+      });
+
+      return { totalScore, temp, salinity, ph, redox };
+    }
+
+    function syncSlidersAndBroadcast(e) {
+      const type = e.target.getAttribute('data-type');
+      const val = e.target.value;
+
+      document.querySelectorAll(`.sim-slider[data-type="${type}"]`).forEach(s => {
+        s.value = val;
+        let unit = '';
+        if (type === 'temperature') unit = '° F';
+        else if (type === 'salinity') unit = ' PPT';
+        else if (type === 'redox') unit = ' mV';
+        else if (type === 'ph') {
+          s.nextElementSibling.textContent = parseFloat(val).toFixed(2);
+          return;
+        }
+        s.nextElementSibling.textContent = val + unit;
+      });
+
+      const data = calculateAIHealthScore();
+
+      // Real-time broadcast
+      const coryIframe = document.getElementById('cory-iframe');
+      if (coryIframe && coryIframe.contentWindow) {
+        const liveTankData = {
+          temperature: data.temp,
+          salinity: data.salinity,
+          ph: data.ph,
+          healthScore: data.totalScore
+        };
+        coryIframe.contentWindow.postMessage({ type: 'UPDATE_TANK_DATA', data: liveTankData }, "*");
+      }
+    }
+
+    sliders.forEach(slider => {
+      slider.addEventListener('input', syncSlidersAndBroadcast);
+    });
+
+    
+function resetSimulationParameters() {
+      const defaults = [
+        ['temperature', '78', '° F'],
+        ['salinity', '35', ' PPT'],
+        ['ph', '8.2', null],
+        ['redox', '350', ' mV']
+      ];
+      defaults.forEach(function (row) {
+        var type = row[0];
+        var val = row[1];
+        var unit = row[2];
+        document.querySelectorAll('.sim-slider[data-type="' + type + '"]').forEach(function (s) {
+          s.value = val;
+          var next = s.nextElementSibling;
+          if (next) {
+            if (type === 'ph') {
+              next.textContent = parseFloat(val).toFixed(2);
+            } else {
+              next.textContent = val + unit;
+            }
+          }
+        });
+      });
+      var data = calculateAIHealthScore();
+      var coryIframe = document.getElementById('cory-iframe');
+      if (coryIframe && coryIframe.contentWindow) {
+        coryIframe.contentWindow.postMessage({
+          type: 'UPDATE_TANK_DATA',
+          data: {
+            temperature: data.temp,
+            salinity: data.salinity,
+            ph: data.ph,
+            healthScore: data.totalScore
+          }
+        }, '*');
+      }
+    }
+
+      var resetBtn = document.getElementById('btn-reset-small');
+      if (resetBtn) resetBtn.addEventListener('click', resetSimulationParameters);
+      calculateAIHealthScore();
+    })();
+  </script>
+</body>
+</html>
